@@ -1,0 +1,25 @@
+1056 ICON "openalias.ico"
+1 VERSIONINFO
+FILEVERSION    0,1,0,0
+PRODUCTVERSION 0,1,0,0
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "080904E4"
+    BEGIN
+      VALUE "CompanyName", "nabijaczleweli"
+      VALUE "FileDescription", "openalias.rs - Securely poll and parse OpenAlias data"
+      VALUE "FileVersion", "0.1.0"
+      VALUE "InternalName", "openalias.rs"
+      VALUE "LegalCopyright", "nabijaczleweli"
+      VALUE "OriginalFilename", "openalias.exe"
+      VALUE "ProductName", "openalias.rs"
+      VALUE "ProductVersion", "0.1.0"
+    END
+  END
+
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x0809, 1252
+  END
+END

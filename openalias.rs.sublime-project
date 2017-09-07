@@ -1,0 +1,46 @@
+{
+	"build_systems":
+	[
+		{
+			"working_dir": "$project_path",
+			"shell_cmd": "cargo build --color always && cargo test --color always",
+			"name": "Build openalias.rs",
+
+			"target": "ansi_color_build",
+			"syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+		},
+		{
+			"working_dir": "$project_path",
+			"shell_cmd": "cargo doc --color always",
+			"name": "Document openalias.rs",
+
+			"target": "ansi_color_build",
+			"syntax": "Packages/ANSIescape/ANSI.tmLanguage"
+		}
+	],
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"name": "Source",
+			"path": "src"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Tests",
+			"path": "tests"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Test data",
+			"path": "test-data"
+		},
+		{
+			"follow_symlinks": true,
+			"name": "Build scripts",
+			"path": ".",
+			"file_include_patterns": ["Cargo.*", "*.yml", "build.rs"],
+			"folder_exclude_patterns": ["*"]
+		},
+	]
+}

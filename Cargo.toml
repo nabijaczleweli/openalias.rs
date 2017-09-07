@@ -1,0 +1,20 @@
+[package]
+name = "openalias"
+description = "Securely poll and parse OpenAlias data"
+documentation = "https://cdn.rawgit.com/nabijaczleweli/cargo-update/doc/cargo_update/index.html"
+repository = "https://github.com/nabijaczleweli/cargo-update"
+readme = "README.md"
+keywords = ["cargo", "update", "plugin", "subcommand"]
+categories = ["command-line-utilities", "parser-implementations", "authentication"]
+license = "MIT"
+build = "build.rs"
+# Remember to also update in appveyor.yml
+# Remember to also update in openalias.rs-manifest.rc
+version = "0.1.0"
+# Remember to also update in man/openalias.rs.md
+authors = ["nabijaczleweli <nabijaczleweli@gmail.com>"]
+exclude = ["*.enc"]
+
+
+[build-dependencies]
+embed-resource = "1.1"
