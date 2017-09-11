@@ -11,6 +11,7 @@ pub enum Error {
     Oa1Parse(ParseError),
     Io(IoError),
     Utf8Parse(FromUtf8Error),
+    AddressParse,
 }
 
 impl From<ParseError> for Error {
@@ -37,6 +38,7 @@ impl StdError for Error {
             Error::Oa1Parse(ref pe) => pe.description(),
             Error::Io(ref ioe) => ioe.description(),
             Error::Utf8Parse(ref u8e) => u8e.description(),
+            Error::AddressParse => "Specified address not valid OpenAlias",
         }
     }
 
@@ -45,6 +47,7 @@ impl StdError for Error {
             Error::Oa1Parse(ref pe) => Some(pe),
             Error::Io(ref ioe) => Some(ioe),
             Error::Utf8Parse(ref u8e) => Some(u8e),
+            Error::AddressParse => None,
         }
     }
 }
@@ -55,6 +58,7 @@ impl fmt::Display for Error {
             Error::Oa1Parse(ref pe) => write!(f, "{}", pe),
             Error::Io(ref ioe) => write!(f, "{}", ioe),
             Error::Utf8Parse(ref u8e) => write!(f, "{}", u8e),
+            Error::AddressParse => write!(f, "{}", self.description()),
         }
     }
 }
