@@ -1,6 +1,6 @@
 [package]
 name = "openalias"
-description = "Securely poll and parse OpenAlias data"
+description = "Securely look up and parse OpenAlias data"
 documentation = "https://cdn.rawgit.com/nabijaczleweli/cargo-update/doc/cargo_update/index.html"
 repository = "https://github.com/nabijaczleweli/cargo-update"
 readme = "README.md"
@@ -16,5 +16,16 @@ authors = ["nabijaczleweli <nabijaczleweli@gmail.com>"]
 exclude = ["*.enc"]
 
 
+[dependencies]
+crc = "1.5"
+
 [build-dependencies]
+peg = "0.5"
+rustfmt = "0.9"
 embed-resource = "1.1"
+
+
+[[bin]]
+name = "openalias"
+test = false
+doc = false

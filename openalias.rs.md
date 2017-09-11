@@ -1,4 +1,4 @@
-openalias.rs(1) -- Securely poll and parse OpenAlias data
+openalias.rs(1) -- Securely look up and parse OpenAlias data
 =========================================================
 
 ## SYNOPSIS
@@ -7,7 +7,7 @@ openalias.rs(1) -- Securely poll and parse OpenAlias data
 
 ## DESCRIPTION
 
-Securely poll and parse OpenAlias data.
+Securely look up and parse OpenAlias data.
 
 OpenAlias is an open DNS-based name to cryptocurrency address mapping format.
 

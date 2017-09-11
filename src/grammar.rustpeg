@@ -1,0 +1,91 @@
+//! Quoting [OpenAlias](https://openalias.org#implement):
+//!
+//! The record always starts with "oa1:", which indicates it is an OpenAlias Version 1 record.
+//! If we don't have that prefix we ignore the record, as it may be an SPF record or something else that we don't care about.
+//! For other applications, Bitcoin for example, that prefix would be oa1:btc or whatever the developers choose.
+//! OpenAlias does not maintain a repository of prefixes at this stage, but may do so in future.
+//!
+//! At a minimum, the recipient_address key-value must exist. OpenAlias exists to alias FQDNs to an "address" of any type,
+//! and this is expressed in this value. Future versions of the OpenAlias standard may implement alternative bare-minimums
+//! if use-cases are found besides FQDN->Address use.
+//!
+//! Key-value pairs are separated by a semi-colon and, optionally, a space for legibility.
+//! The value may or may not be wrapped in double-inverted commas, which should be removed from the value if found at the
+//! beginning and end of the value.
+//! The value should also always be trimmed of spaces, unless the space is escaped with a backslash. Dependent on the DNS
+//! library or implementation you use, you may find that the semi-colon at the end of the pair is escaped with a backslash.
+//!
+//! In order to not overcomplicate this, a semi-colon is a forbidden character unless it is in a value that is entirely wrapped
+//! in double-inverted commas. Similarly, a double-inverted comma can exist anywhere in the value without needing to be escaped,
+//! unless it is both at the beginning and the end of the value, which is not allowed. Keys and values are not limited in size,
+//! although it is counter-productive to have exceedingly large key-values, as DNS is not designed as a data transfer mechanism.
+//!
+//! The other key-value pair in our example is the recipient_name.
+//! This is not necessary, but useful for the purpose of confirming the correct recipient with the user,
+//! or for providing the user with the option of adding an entry to an address book.
+
+
+use self::super::CryptoAddress;
+use std::collections::BTreeMap;
+
+
+pub oa1 -> CryptoAddress
+    = "oa1:" crypto_name:$([a-z]+) " " kvs:sep_kv+ {
+        let mut out = CryptoAddress {
+            cryptocurrency: crypto_name.to_string(),
+            address: String::new(),
+            recipient_name: None,
+            tx_description: None,
+            tx_amount: None,
+            tx_payment_id: None,
+            address_signature: None,
+            checksum: None,
+            additional_values: BTreeMap::new(),
+        };
+        let mut have_address = false;
+
+        for (key, val) in kvs {
+            match &key[..] {
+                "recipient_address" => {
+                    have_address = true;
+                    out.address = val;
+                }
+                "recipient_name" => out.recipient_name = Some(val),
+                "tx_description" => out.tx_description = Some(val),
+                "tx_amount" => out.tx_amount = Some(val),
+                "tx_payment_id" => out.tx_payment_id = Some(val),
+                "address_signature" => out.address_signature = Some(val),
+                "checksum" => {
+                    let parsed = checksum_val(&val);
+                    if let Some(cksum) = parsed.ok() {
+                        out.checksum = Some((cksum, false));
+                    } else {
+                        return Failed;
+                    }
+                },
+                _ => { out.additional_values.insert(key, val); },
+            }
+        }
+
+        out
+    }
+
+pub checksum_val -> u32
+    = cksum:$([0-9a-fA-F]*<8>) { u32::from_str_radix(cksum, 16).unwrap() }
+
+
+sep_kv -> (String, String)
+    = k_v:kv ";" " "? { k_v }
+
+kv -> (String, String)
+    = k_v:quoted_kv { k_v } /
+      k_v:unquoted_kv { k_v }
+
+quoted_kv -> (String, String)
+    = key_s:key "=\"" val_s:$([^""]*) "\"" { (key_s, val_s.replace("\\ ", " ")) }
+
+unquoted_kv -> (String, String)
+    = key_s:key "=" val_s:$("\\ "* [^ ;]* [^;]* [^ ;]* "\\ "*) { (key_s, val_s.replace("\\ ", " ")) }
+
+key -> String
+    = k:$([a-zA-Z0-9_]+) { k.to_string() }
