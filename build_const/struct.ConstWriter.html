@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `ConstWriter` struct in crate `build_const`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, ConstWriter">
+
+    <title>build_const::ConstWriter - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Struct ConstWriter</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='index.html'>build_const</a></p><script>window.sidebarCurrent = {name: 'ConstWriter', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>build_const</a>::<wbr><a class="struct" href=''>ConstWriter</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/build_const/writer.rs.html#40-42' title='goto source code'>[src]</a></span></h1>
+<pre class='rust struct'>pub struct ConstWriter { /* fields omitted */ }</pre><div class='docblock'><p>Primary object used to write constant files.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="kw">use</span> <span class="ident">build_const</span>::<span class="ident">ConstWriter</span>;
+ 
+<span class="comment">// use `for_build` in `build.rs`</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">consts</span> <span class="op">=</span> <span class="ident">ConstWriter</span>::<span class="ident">from_path</span>(
+    <span class="kw-2">&amp;</span><span class="ident">Path</span>::<span class="ident">new</span>(<span class="string">&quot;/tmp/constants.rs&quot;</span>)
+).<span class="ident">unwrap</span>();
+ 
+<span class="comment">// add an external dependency (`use xyz::Point`)</span>
+<span class="ident">consts</span>.<span class="ident">add_dependency</span>(<span class="string">&quot;xyz::Point&quot;</span>);
+ 
+<span class="comment">// finish dependencies and starting writing constants</span>
+<span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">consts</span> <span class="op">=</span> <span class="ident">consts</span>.<span class="ident">finish_dependencies</span>();
+
+<span class="comment">// add an array of values</span>
+<span class="kw">let</span> <span class="ident">values</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span> <span class="op">=</span> <span class="macro">vec</span><span class="macro">!</span>[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">36</span>];
+<span class="ident">consts</span>.<span class="ident">add_array</span>(<span class="string">&quot;ARRAY&quot;</span>, <span class="string">&quot;u8&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">values</span>);
+
+<span class="comment">// Add a value that is a result of &quot;complex&quot; calculations</span>
+<span class="ident">consts</span>.<span class="ident">add_value</span>(<span class="string">&quot;VALUE&quot;</span>, <span class="string">&quot;u8&quot;</span>, <span class="ident">values</span>.<span class="ident">iter</span>().<span class="ident">sum</span>::<span class="op">&lt;</span><span class="ident">u8</span><span class="op">&gt;</span>());
+ 
+<span class="comment">// Add a value from an external crate (must implement `Debug`)</span>
+<span class="ident">consts</span>.<span class="ident">add_value</span>(<span class="string">&quot;VALUE&quot;</span>, <span class="string">&quot;Point&quot;</span>, <span class="kw-2">&amp;</span><span class="ident">Point</span> { <span class="ident">x</span>: <span class="number">3</span>, <span class="ident">y</span>: <span class="number">7</span>});</pre>
+</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl <a class="struct" href="../build_const/struct.ConstWriter.html" title="struct build_const::ConstWriter">ConstWriter</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/build_const/writer.rs.html#50-91' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.for_build' class="method"><span id='for_build.v' class='invisible'><code>fn <a href='#method.for_build' class='fnname'>for_build</a>(mod_name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../build_const/struct.ConstWriter.html" title="struct build_const::ConstWriter">ConstWriter</a>&gt;</code></span></h4>
+<div class='docblock'><p>Create a ConstWriter to be used for your crate&#39;s <code>build.rs</code></p>
+</div><h4 id='method.from_path' class="method"><span id='from_path.v' class='invisible'><code>fn <a href='#method.from_path' class='fnname'>from_path</a>(path: &amp;<a class="struct" href="https://doc.rust-lang.org/nightly/std/path/struct.Path.html" title="struct std::path::Path">Path</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/std/io/error/type.Result.html" title="type std::io::error::Result">Result</a>&lt;<a class="struct" href="../build_const/struct.ConstWriter.html" title="struct build_const::ConstWriter">ConstWriter</a>&gt;</code></span></h4>
+<div class='docblock'><p>Create a new ConstWriter to write to an path. If a file
+already exists at the path then it will be deleted.</p>
+</div><h4 id='method.finish_dependencies' class="method"><span id='finish_dependencies.v' class='invisible'><code>fn <a href='#method.finish_dependencies' class='fnname'>finish_dependencies</a>(self) -&gt; <a class="struct" href="../build_const/struct.ConstValueWriter.html" title="struct build_const::ConstValueWriter">ConstValueWriter</a></code></span></h4>
+<div class='docblock'><p>finish writing dependencies and start writing constants</p>
+</div><h4 id='method.add_dependency' class="method"><span id='add_dependency.v' class='invisible'><code>fn <a href='#method.add_dependency' class='fnname'>add_dependency</a>(&amp;mut self, lib: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>)</code></span></h4>
+<div class='docblock'><p>Add a dependency to your constants file.</p>
+</div><h4 id='method.add_raw' class="method"><span id='add_raw.v' class='invisible'><code>fn <a href='#method.add_raw' class='fnname'>add_raw</a>(&amp;mut self, raw: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>)</code></span></h4>
+<div class='docblock'><p>Add a raw string to the constants file.</p>
+
+<p>This method only changes <code>raw</code> by adding a <code>\n</code> at the end.</p>
+</div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "build_const";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>

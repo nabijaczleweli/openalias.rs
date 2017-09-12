@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `build_const` crate.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, build_const">
+
+    <title>build_const - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
+    <link rel="stylesheet" type="text/css" href="../main.css">
+    
+
+    
+    
+</head>
+<body class="rustdoc mod">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        
+        <p class='location'>Crate build_const</p><div class="block items"><ul><li><a href="#macros">Macros</a></li><li><a href="#structs">Structs</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'build_const', ty: 'mod', relpath: '../'};</script>
+    </nav>
+
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content">
+<h1 class='fqn'><span class='in-band'>Crate <a class="mod" href=''>build_const</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/build_const/lib.rs.html#1-87' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p><code>build_const</code>: crate for creating constants in your build script</p>
+
+<p>The build_const crate exists to help create rust constant files at compile time or in a
+generating script. It is ultra simple and lightweight, making constant creation a simple
+matter.</p>
+
+<p>Recommended use: when developing make your constants in <code>build.rs</code>. Once your constants are
+fairly stable create a script instead and have your constants file be generated in either a
+single file or an external crate that you can bring in as a dependency.</p>
+
+<h1 id='example' class='section-header'><a href='#example'>Example</a></h1>
+<p>Include <code>build_const = VERSION</code> in your <code>Cargo.toml</code> file. For <code>no_std</code> support (macros only)
+use <code>default-features = false</code>.</p>
+
+<p>See <code>ConstWriter</code> for how to use in a build.rs or script. To then import a &quot;constants.rs&quot; file
+created in <code>build.rs</code> use:</p>
+
+<pre><code class="language-c">#[macro_use]
+extern crate build_const;
+ 
+build_const!(&quot;constants&quot;);
+println!(&quot;VALUE: {}&quot;, VALUE);
+println!(&quot;VALUE: {}&quot;, ARRAY);
+</code></pre>
+
+<p>For writing constants in a script, the macro <code>src_file!</code> is also provided.
+<code>c // will write files to `/src/constants.rs` let mut consts = ConstWriter::from_path(&amp;Path::from(src_file!(&quot;constants.rs&quot;))).unwrap(); // ... use consts</code></p>
+</div><h2 id='macros' class='section-header'><a href="#macros">Macros</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.build_const.html"
+                                  title='macro build_const::build_const'>build_const</a></td>
+                           <td class='docblock-short'>
+                                <p>Shortcut macro which expands to the same module path used in
+<code>ConstWriter::for_build(mod_name)</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="macro" href="macro.src_file.html"
+                                  title='macro build_const::src_file'>src_file</a></td>
+                           <td class='docblock-short'>
+                                <p>Macro which returns the path to file in your <code>src/</code> directory.</p>
+                           </td>
+                       </tr></table><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ConstValueWriter.html"
+                                  title='struct build_const::ConstValueWriter'>ConstValueWriter</a></td>
+                           <td class='docblock-short'>
+                                <p>Created from <code>ConstWriter::finish_dependencies</code>. See
+documentation for <code>ConstWriter</code>.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="struct" href="struct.ConstWriter.html"
+                                  title='struct build_const::ConstWriter'>ConstWriter</a></td>
+                           <td class='docblock-short'>
+                                <p>Primary object used to write constant files.</p>
+                           </td>
+                       </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
+<table>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.write_array.html"
+                                  title='fn build_const::write_array'>write_array</a></td>
+                           <td class='docblock-short'>
+                                <p>Write an array and return the array&#39;s full type representation.</p>
+                           </td>
+                       </tr>
+                       <tr class=' module-item'>
+                           <td><a class="fn" href="fn.write_array_raw.html"
+                                  title='fn build_const::write_array_raw'>write_array_raw</a></td>
+                           <td class='docblock-short'>
+                                <p>Write an array of raw values and return the array&#39;s full type representation.</p>
+                           </td>
+                       </tr></table></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt>?</dt>
+                    <dd>Show this help dialog</dd>
+                    <dt>S</dt>
+                    <dd>Focus the search field</dd>
+                    <dt>&larrb;</dt>
+                    <dd>Move up in search results</dd>
+                    <dt>&rarrb;</dt>
+                    <dd>Move down in search results</dd>
+                    <dt>&#9166;</dt>
+                    <dd>Go to active search result</dd>
+                    <dt>+</dt>
+                    <dd>Collapse/expand all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "build_const";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
