@@ -15,7 +15,7 @@
 //! // Normally a user would type this in.
 //! let address = "donate@getmonero.org";
 //!
-//! if let Some(fqdn) = openalias::alias_to_fqdn("donate@getmonero.org") {
+//! if let Some(fqdn) = openalias::alias_to_fqdn(address) {
 //!     println!("{} maps to {}", address, fqdn);
 //! #   assert_eq!(fqdn, "donate.getmonero.org.");
 //! } else {
@@ -94,7 +94,7 @@
 //!     }
 //!     Err(err) => {
 //!         // alias isn't an OpenAlias,
-//!         //   or there was an error talking with a DNS server, or an "oa1:"-prefixed record isn't an
+//!         //   or there was an error talking with a DNS server,
 //!         //   or an "oa1:"-prefixed record isn't an OpenAlias record.
 //! #       assert!(false);
 //!     }
@@ -112,11 +112,12 @@
 //!
 //! ## OPTIONS
 //!
-//! | Option                | Description                                           |
-//! |-----------------------|-------------------------------------------------------|
-//! | &lt;OPEN_ALIAS&gt;... | FQDN or email-style aliases to look up addresses for. |
-//! | --verbose             | Print more data about what's happenning to stderr.    |
-//! | --raw                 | Print just the record text.                           |
+//! | Option                   | Description                                           |
+//! |--------------------------|-------------------------------------------------------|
+//! | &lt;OPEN_ALIAS&gt;...    | FQDN or email-style aliases to look up addresses for. |
+//! | --verbose                | Print more data about what's happenning to stderr.    |
+//! | --raw                    | Print just the record text.                           |
+//! | --currency=[CURRENCY]... | Limit results to specified currencies.                |
 //!
 //! ## EXAMPLES
 //!
@@ -154,6 +155,19 @@
 //!           recipient_name=Monero Development; tx_description=Donation to Monero Core Team;
 //!   oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; recipient_name=Monero Development;
 //!           tx_description=Donation to Monero Core Team;
+//! ```
+//!
+//! `openalias -cxmr -c doge nabijaczleweli.xyz donate.getmonero.org`
+//!
+//! ```text
+//! No xmr, nor doge addresses found for nabijaczleweli.xyz.
+//!
+//! Addresses of donate.getmonero.org:
+//!   xmr:
+//!     Monero Development
+//!     44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3
+//!       XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A
+//!     Donation to Monero Core Team
 //! ```
 
 

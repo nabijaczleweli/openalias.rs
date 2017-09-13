@@ -28,6 +28,10 @@ pub struct Options {
     ///
     /// Default: `false`.
     pub raw: bool,
+    /// Limit results to currencies from this list.
+    ///
+    /// Default: `None`.
+    pub currency_filter: Option<Vec<String>>,
 }
 
 impl Options {
@@ -38,12 +42,14 @@ impl Options {
             .arg(Arg::from_usage("<OPEN_ALIAS>... 'Aliases to look up'").validator(Options::open_alias_validator).required(true))
             .arg(Arg::from_usage("-v --verbose 'Print out more information'"))
             .arg(Arg::from_usage("-r --raw 'Print just the record text'"))
+            .arg(Arg::from_usage("-c --currency=[CURRENCY]... 'Limit results to just CURRENCY'"))
             .get_matches();
 
         Options {
             aliases: matches.values_of("OPEN_ALIAS").unwrap().map(String::from).collect(),
             verbose: matches.is_present("verbose"),
             raw: matches.is_present("raw"),
+            currency_filter: matches.values_of("currency").map(|cs| cs.map(String::from).collect()),
         }
     }
 
