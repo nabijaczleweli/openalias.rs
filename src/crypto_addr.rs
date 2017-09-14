@@ -227,32 +227,32 @@ impl fmt::Display for CryptoAddress {
         write!(out, "oa1:{} recipient_address=", self.cryptocurrency).map_err(|_| fmt::Error)?;
         escape_val(&mut out, &self.address)?;
 
-        if let Some(ref recipient_name) = self.recipient_name.as_ref() {
+        if let Some(recipient_name) = self.recipient_name.as_ref() {
             write!(out, " recipient_name=").map_err(|_| fmt::Error)?;
             escape_val(&mut out, recipient_name)?;
         }
 
-        if let Some(ref tx_description) = self.tx_description.as_ref() {
+        if let Some(tx_description) = self.tx_description.as_ref() {
             write!(out, " tx_description=").map_err(|_| fmt::Error)?;
             escape_val(&mut out, tx_description)?;
         }
 
-        if let Some(ref tx_amount) = self.tx_amount.as_ref() {
+        if let Some(tx_amount) = self.tx_amount.as_ref() {
             write!(out, " tx_amount=").map_err(|_| fmt::Error)?;
             escape_val(&mut out, tx_amount)?;
         }
 
-        if let Some(ref tx_payment_id) = self.tx_payment_id.as_ref() {
+        if let Some(tx_payment_id) = self.tx_payment_id.as_ref() {
             write!(out, " tx_payment_id=").map_err(|_| fmt::Error)?;
             escape_val(&mut out, tx_payment_id)?;
         }
 
-        if let Some(ref address_signature) = self.address_signature.as_ref() {
+        if let Some(address_signature) = self.address_signature.as_ref() {
             write!(out, " address_signature=").map_err(|_| fmt::Error)?;
             escape_val(&mut out, address_signature)?;
         }
 
-        for (ref key, ref val) in &self.additional_values {
+        for (key, val) in &self.additional_values {
             write!(out, " {}=", key).map_err(|_| fmt::Error)?;
             escape_val(&mut out, val)?;
         }
