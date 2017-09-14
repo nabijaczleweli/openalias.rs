@@ -543,32 +543,32 @@
         <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot;oa1:{} recipient_address=&quot;</span>, <span class="self">self</span>.<span class="ident">cryptocurrency</span>).<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">fmt</span>::<span class="ident">Error</span>)<span class="question-mark">?</span>;
         <span class="ident">escape_val</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">address</span>)<span class="question-mark">?</span>;
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">recipient_name</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">recipient_name</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">recipient_name</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">recipient_name</span>.<span class="ident">as_ref</span>() {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot; recipient_name=&quot;</span>).<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">fmt</span>::<span class="ident">Error</span>)<span class="question-mark">?</span>;
             <span class="ident">escape_val</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">recipient_name</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">tx_description</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tx_description</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">tx_description</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tx_description</span>.<span class="ident">as_ref</span>() {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot; tx_description=&quot;</span>).<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">fmt</span>::<span class="ident">Error</span>)<span class="question-mark">?</span>;
             <span class="ident">escape_val</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">tx_description</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">tx_amount</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tx_amount</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">tx_amount</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tx_amount</span>.<span class="ident">as_ref</span>() {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot; tx_amount=&quot;</span>).<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">fmt</span>::<span class="ident">Error</span>)<span class="question-mark">?</span>;
             <span class="ident">escape_val</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">tx_amount</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">tx_payment_id</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tx_payment_id</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">tx_payment_id</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">tx_payment_id</span>.<span class="ident">as_ref</span>() {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot; tx_payment_id=&quot;</span>).<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">fmt</span>::<span class="ident">Error</span>)<span class="question-mark">?</span>;
             <span class="ident">escape_val</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">tx_payment_id</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="kw-2">ref</span> <span class="ident">address_signature</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">address_signature</span>.<span class="ident">as_ref</span>() {
+        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">address_signature</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">address_signature</span>.<span class="ident">as_ref</span>() {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot; address_signature=&quot;</span>).<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">fmt</span>::<span class="ident">Error</span>)<span class="question-mark">?</span>;
             <span class="ident">escape_val</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">address_signature</span>)<span class="question-mark">?</span>;
         }
 
-        <span class="kw">for</span> (<span class="kw-2">ref</span> <span class="ident">key</span>, <span class="kw-2">ref</span> <span class="ident">val</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">additional_values</span> {
+        <span class="kw">for</span> (<span class="ident">key</span>, <span class="ident">val</span>) <span class="kw">in</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">additional_values</span> {
             <span class="macro">write</span><span class="macro">!</span>(<span class="ident">out</span>, <span class="string">&quot; {}=&quot;</span>, <span class="ident">key</span>).<span class="ident">map_err</span>(<span class="op">|</span>_<span class="op">|</span> <span class="ident">fmt</span>::<span class="ident">Error</span>)<span class="question-mark">?</span>;
             <span class="ident">escape_val</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">out</span>, <span class="ident">val</span>)<span class="question-mark">?</span>;
         }
