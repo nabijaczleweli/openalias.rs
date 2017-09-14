@@ -6,11 +6,16 @@ use std::convert::From;
 use std::fmt;
 
 
+/// Some error emerging from the library.
 #[derive(Debug)]
 pub enum Error {
+    /// Error parsing an OA1 record.
     Oa1Parse(ParseError),
+    /// Error with conversing with DNS server.
     Io(IoError),
+    /// TXT record not UTF8 (ASCII).
     Utf8Parse(FromUtf8Error),
+    /// Non-FQDN address passed to `address*()`.
     AddressParse,
 }
 

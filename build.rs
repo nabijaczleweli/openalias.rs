@@ -12,7 +12,7 @@ use std::io::{BufReader, BufRead, Write};
 fn main() {
     let doc_correction_map = {
         let mut m = BTreeMap::new();
-        m.insert("pub struct ParseError {", "OpenAlias parsing error");
+        m.insert("pub struct ParseError {", "OpenAlias record parsing error");
         m.insert("    pub line: usize,", "1-based line # of error");
         m.insert("    pub column: usize,", "1-based column # of error");
         m.insert("    pub offset: usize,", "Byte offset of error");
