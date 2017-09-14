@@ -1,1 +1,1 @@
-initSidebarItems({"enum":[["Error",""]],"fn":[["address_strings",""],["addresses",""]],"struct":[["CryptoAddress",""],["ParseError","OpenAlias parsing error"]]});
+initSidebarItems({"enum":[["Error",""]],"fn":[["address_strings",""],["addresses",""],["parse_openalias",""]],"struct":[["CryptoAddress",""],["ParseError","OpenAlias parsing error"]]});

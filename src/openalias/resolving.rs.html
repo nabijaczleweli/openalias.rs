@@ -75,8 +75,8 @@
 <span id="30">30</span>
 <span id="31">31</span>
 </pre><pre class="rust ">
+<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::{<span class="ident">CryptoAddress</span>, <span class="ident">Error</span>, <span class="ident">parse_openalias</span>};
 <span class="kw">use</span> <span class="ident">resolve</span>::{<span class="ident">DnsResolver</span>, <span class="ident">DnsConfig</span>, <span class="ident">default_config</span>};
-<span class="kw">use</span> <span class="self">self</span>::<span class="kw">super</span>::{<span class="ident">CryptoAddress</span>, <span class="ident">Error</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">iter</span>::<span class="ident">FromIterator</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Duration</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">str</span>::<span class="ident">FromStr</span>;
@@ -100,7 +100,7 @@
             }
         }))
         <span class="question-mark">?</span>
-        .<span class="ident">resolve_record</span>::<span class="op">&lt;</span><span class="ident">record</span>::<span class="ident">Txt</span><span class="op">&gt;</span>(<span class="ident">address</span>)<span class="question-mark">?</span>
+        .<span class="ident">resolve_record</span>::<span class="op">&lt;</span><span class="ident">record</span>::<span class="ident">Txt</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="ident">parse_openalias</span>(<span class="ident">address</span>).<span class="ident">ok_or</span>(<span class="ident">Error</span>::<span class="ident">AddressParse</span>)<span class="question-mark">?</span>)<span class="question-mark">?</span>
         .<span class="ident">into_iter</span>()
         .<span class="ident">map</span>(<span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">r</span>.<span class="ident">data</span>)
         .<span class="ident">filter</span>(<span class="op">|</span><span class="ident">s</span><span class="op">|</span> <span class="ident">s</span>.<span class="ident">starts_with</span>(<span class="string">b&quot;oa1:&quot;</span>))
