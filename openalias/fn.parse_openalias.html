@@ -48,8 +48,28 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/openalias/address.rs.html#1-11' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn parse_openalias(alias: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</pre></section>
+               </span><a class='srclink' href='../src/openalias/address.rs.html#24-34' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn parse_openalias(alias: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</pre><div class='docblock'><p>Convert an OpenAlias to an FQDN.</p>
+
+<p>Paraphrasing <a href="https://openalias.org#implement">OpenAlias</a>:</p>
+
+<ol>
+<li><p>If the alias contains an <code>@</code> character, replace it with a <code>.</code> (period) character to allow for email-style addressing.</p></li>
+<li><p>Check that the alias contains a <code>.</code> (period) character, if not then it is an address and not an FQDN.</p></li>
+<li><p>Append, if one doesn&#39;t exist, a dot to the end of the alias, to ensure it&#39;s an FQDN.</p></li>
+</ol>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parse_openalias</span>(<span class="string">&quot;donate.getmonero.org&quot;</span>),
+           <span class="prelude-val">Some</span>(<span class="string">&quot;donate.getmonero.org.&quot;</span>.<span class="ident">to_string</span>()));
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parse_openalias</span>(<span class="string">&quot;donate@nabijaczleweli.xyz&quot;</span>),
+           <span class="prelude-val">Some</span>(<span class="string">&quot;donate.nabijaczleweli.xyz.&quot;</span>.<span class="ident">to_string</span>()));
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parse_openalias</span>(<span class="string">&quot;nabijaczleweli.xyz.&quot;</span>),
+           <span class="prelude-val">Some</span>(<span class="string">&quot;nabijaczleweli.xyz.&quot;</span>.<span class="ident">to_string</span>()));
+
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">parse_openalias</span>(<span class="string">&quot;nabijaczleweli&quot;</span>), <span class="prelude-val">None</span>);</pre>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

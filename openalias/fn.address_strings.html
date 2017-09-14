@@ -48,8 +48,20 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/openalias/resolving.rs.html#13-31' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn address_strings(address: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, <a class="enum" href="../openalias/enum.Error.html" title="enum openalias::Error">Error</a>&gt;</pre></section>
+               </span><a class='srclink' href='../src/openalias/resolving.rs.html#67-85' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn address_strings(address: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, <a class="enum" href="../openalias/enum.Error.html" title="enum openalias::Error">Error</a>&gt;</pre><div class='docblock'><p>Ask a DNS server for &quot;oa1:&quot;-prefixed TXT records for the specified OpenAlias.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">address_strings</span>(<span class="string">&quot;donate@getmonero.org&quot;</span>).<span class="ident">unwrap</span>().<span class="ident">sorted</span>(),
+           <span class="macro">vec</span><span class="macro">!</span>[<span class="string">&quot;oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; \
+                 recipient_name=Monero Development; \
+                 tx_description=Donation to Monero Core Team;&quot;</span>.<span class="ident">to_string</span>(),
+                <span class="string">&quot;oa1:xmr recipient_address=44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft\
+                 3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A; \
+                 recipient_name=Monero Development; \
+                 tx_description=Donation to Monero Core Team;&quot;</span>.<span class="ident">to_string</span>()]);</pre>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

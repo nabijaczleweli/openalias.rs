@@ -48,8 +48,40 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/openalias/resolving.rs.html#9-11' title='goto source code'>[src]</a></span></h1>
-<pre class='rust fn'>pub fn addresses(address: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../openalias/struct.CryptoAddress.html" title="struct openalias::CryptoAddress">CryptoAddress</a>&gt;, <a class="enum" href="../openalias/enum.Error.html" title="enum openalias::Error">Error</a>&gt;</pre></section>
+               </span><a class='srclink' href='../src/openalias/resolving.rs.html#46-48' title='goto source code'>[src]</a></span></h1>
+<pre class='rust fn'>pub fn addresses(address: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../openalias/struct.CryptoAddress.html" title="struct openalias::CryptoAddress">CryptoAddress</a>&gt;, <a class="enum" href="../openalias/enum.Error.html" title="enum openalias::Error">Error</a>&gt;</pre><div class='docblock'><p>Ask a DNS server for addresses for the specified OpenAlias.</p>
+
+<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<pre class="rust rust-example-rendered">
+<span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">addresses</span>(<span class="string">&quot;donate@getmonero.org&quot;</span>).<span class="ident">unwrap</span>().<span class="ident">sorted</span>(),
+           <span class="macro">vec</span><span class="macro">!</span>[<span class="ident">CryptoAddress</span> {
+                    <span class="ident">cryptocurrency</span>: <span class="string">&quot;btc&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="ident">address</span>: <span class="string">&quot;1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H&quot;</span>.<span class="ident">to_string</span>(),
+
+                    <span class="ident">recipient_name</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;Monero Development&quot;</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">tx_description</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;Donation to Monero Core Team&quot;</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">tx_amount</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">tx_payment_id</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">address_signature</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">checksum</span>: <span class="prelude-val">None</span>,
+
+                    <span class="ident">additional_values</span>: <span class="ident">BTreeMap</span>::<span class="ident">new</span>(),
+                },
+                <span class="ident">CryptoAddress</span> {
+                    <span class="ident">cryptocurrency</span>: <span class="string">&quot;xmr&quot;</span>.<span class="ident">to_string</span>(),
+                    <span class="ident">address</span>: <span class="string">&quot;44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft\
+                              3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A&quot;</span>.<span class="ident">to_string</span>(),
+
+                    <span class="ident">recipient_name</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;Monero Development&quot;</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">tx_description</span>: <span class="prelude-val">Some</span>(<span class="string">&quot;Donation to Monero Core Team&quot;</span>.<span class="ident">to_string</span>()),
+                    <span class="ident">tx_amount</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">tx_payment_id</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">address_signature</span>: <span class="prelude-val">None</span>,
+                    <span class="ident">checksum</span>: <span class="prelude-val">None</span>,
+
+                    <span class="ident">additional_values</span>: <span class="ident">BTreeMap</span>::<span class="ident">new</span>(),
+                }]);</pre>
+</div></section>
     <section id='search' class="content hidden"></section>
 
     <section class="footer"></section>

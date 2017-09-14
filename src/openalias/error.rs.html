@@ -107,6 +107,11 @@
 <span id="62">62</span>
 <span id="63">63</span>
 <span id="64">64</span>
+<span id="65">65</span>
+<span id="66">66</span>
+<span id="67">67</span>
+<span id="68">68</span>
+<span id="69">69</span>
 </pre><pre class="rust ">
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">error</span>::<span class="ident">Error</span> <span class="kw">as</span> <span class="ident">StdError</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">string</span>::<span class="ident">FromUtf8Error</span>;
@@ -116,11 +121,16 @@
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">fmt</span>;
 
 
+<span class="doccomment">/// Some error emerging from the library.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">enum</span> <span class="ident">Error</span> {
+    <span class="doccomment">/// Error parsing an OA1 record.</span>
     <span class="ident">Oa1Parse</span>(<span class="ident">ParseError</span>),
+    <span class="doccomment">/// Error with conversing with DNS server.</span>
     <span class="ident">Io</span>(<span class="ident">IoError</span>),
+    <span class="doccomment">/// TXT record not UTF8 (ASCII).</span>
     <span class="ident">Utf8Parse</span>(<span class="ident">FromUtf8Error</span>),
+    <span class="doccomment">/// Non-FQDN address passed to `address*()`.</span>
     <span class="ident">AddressParse</span>,
 }
 
