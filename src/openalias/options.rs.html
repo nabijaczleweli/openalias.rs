@@ -82,6 +82,14 @@
 <span id="37">37</span>
 <span id="38">38</span>
 <span id="39">39</span>
+<span id="40">40</span>
+<span id="41">41</span>
+<span id="42">42</span>
+<span id="43">43</span>
+<span id="44">44</span>
+<span id="45">45</span>
+<span id="46">46</span>
+<span id="47">47</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! This module contains the configuration of the application.</span>
 <span class="doccomment">//!</span>
@@ -105,6 +113,10 @@
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Options</span> {
     <span class="doccomment">/// Aliases to look up.</span>
     <span class="kw">pub</span> <span class="ident">aliases</span>: <span class="ident">Vec</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Print more information.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Default: `false`.</span>
+    <span class="kw">pub</span> <span class="ident">verbose</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Options</span> {
@@ -113,9 +125,13 @@
         <span class="kw">let</span> <span class="ident">matches</span> <span class="op">=</span> <span class="macro">app_from_crate</span><span class="macro">!</span>(<span class="string">&quot;\n&quot;</span>)
             .<span class="ident">setting</span>(<span class="ident">AppSettings</span>::<span class="ident">ColoredHelp</span>)
             .<span class="ident">arg</span>(<span class="ident">Arg</span>::<span class="ident">from_usage</span>(<span class="string">&quot;&lt;OPEN_ALIAS&gt;... &#39;Aliases to look up&#39;&quot;</span>).<span class="ident">validator</span>(<span class="ident">Options</span>::<span class="ident">open_alias_validator</span>).<span class="ident">required</span>(<span class="bool-val">true</span>))
+            .<span class="ident">arg</span>(<span class="ident">Arg</span>::<span class="ident">from_usage</span>(<span class="string">&quot;-v --verbose &#39;Print out more information&#39;&quot;</span>))
             .<span class="ident">get_matches</span>();
 
-        <span class="ident">Options</span> { <span class="ident">aliases</span>: <span class="ident">matches</span>.<span class="ident">values_of</span>(<span class="string">&quot;OPEN_ALIAS&quot;</span>).<span class="ident">unwrap</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">from</span>).<span class="ident">collect</span>() }
+        <span class="ident">Options</span> {
+            <span class="ident">aliases</span>: <span class="ident">matches</span>.<span class="ident">values_of</span>(<span class="string">&quot;OPEN_ALIAS&quot;</span>).<span class="ident">unwrap</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">from</span>).<span class="ident">collect</span>(),
+            <span class="ident">verbose</span>: <span class="ident">matches</span>.<span class="ident">is_present</span>(<span class="string">&quot;verbose&quot;</span>),
+        }
     }
 
     <span class="kw">fn</span> <span class="ident">open_alias_validator</span>(<span class="ident">s</span>: <span class="ident">String</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">String</span><span class="op">&gt;</span> {
