@@ -91,17 +91,17 @@
 <span class="doccomment">/// # Examples</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// ```</span>
-<span class="doccomment">/// # use openalias::parse_openalias;</span>
-<span class="doccomment">/// assert_eq!(parse_openalias(&quot;donate.getmonero.org&quot;),</span>
+<span class="doccomment">/// # use openalias::alias_to_fqdn;</span>
+<span class="doccomment">/// assert_eq!(alias_to_fqdn(&quot;donate.getmonero.org&quot;),</span>
 <span class="doccomment">///            Some(&quot;donate.getmonero.org.&quot;.to_string()));</span>
-<span class="doccomment">/// assert_eq!(parse_openalias(&quot;donate@nabijaczleweli.xyz&quot;),</span>
+<span class="doccomment">/// assert_eq!(alias_to_fqdn(&quot;donate@nabijaczleweli.xyz&quot;),</span>
 <span class="doccomment">///            Some(&quot;donate.nabijaczleweli.xyz.&quot;.to_string()));</span>
-<span class="doccomment">/// assert_eq!(parse_openalias(&quot;nabijaczleweli.xyz.&quot;),</span>
+<span class="doccomment">/// assert_eq!(alias_to_fqdn(&quot;nabijaczleweli.xyz.&quot;),</span>
 <span class="doccomment">///            Some(&quot;nabijaczleweli.xyz.&quot;.to_string()));</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// assert_eq!(parse_openalias(&quot;nabijaczleweli&quot;), None);</span>
+<span class="doccomment">/// assert_eq!(alias_to_fqdn(&quot;nabijaczleweli&quot;), None);</span>
 <span class="doccomment">/// ```</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">parse_openalias</span>(<span class="ident">alias</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">alias_to_fqdn</span>(<span class="ident">alias</span>: <span class="kw-2">&amp;</span><span class="ident">str</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">String</span><span class="op">&gt;</span> {
     <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">alias</span> <span class="op">=</span> <span class="ident">alias</span>.<span class="ident">replace</span>(<span class="string">&quot;@&quot;</span>, <span class="string">&quot;.&quot;</span>);
     <span class="kw">if</span> <span class="ident">alias</span>.<span class="ident">contains</span>(<span class="string">&#39;.&#39;</span>) {
         <span class="kw">if</span> <span class="op">!</span><span class="ident">alias</span>.<span class="ident">ends_with</span>(<span class="string">&#39;.&#39;</span>) {
