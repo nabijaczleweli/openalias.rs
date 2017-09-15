@@ -15,7 +15,8 @@ openalias nabijaczleweli.xyz donate.getmonero.org
 Look up and get BTC address for "donate@nabijaczleweli.xyz":
 
 ```rust
-// TODO when the API starts existing
+extern crate openalias;
+openalias::addresses("donate@nabijaczleweli.xyz");
 ```
 
 For more information and examples see the [manpage](https://cdn.rawgit.com/nabijaczleweli/openalias.rs/man/cargo-install-update.1.html) and/or

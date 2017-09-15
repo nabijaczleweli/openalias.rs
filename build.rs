@@ -6,10 +6,11 @@ use std::env;
 use std::fs::{self, File};
 use std::path::{PathBuf, Path};
 use std::collections::BTreeMap;
-use std::io::{BufReader, BufRead, Write};
+use std::io::{BufReader, BufRead, Write, Read};
 
 
 fn main() {
+    let out_dir = env::var("OUT_DIR").expect("OUT_DIR env var nonexistant/non-Unicode");
     let doc_correction_map = {
         let mut m = BTreeMap::new();
         m.insert("pub struct ParseError {", "OpenAlias record parsing error");
@@ -22,9 +23,22 @@ fn main() {
     };
 
 
-    embed_resource::compile("openalias.rs-manifest.rc");
+    let mut resource_template = String::new();
+    File::open("openalias.rs-manifest.rc").expect("opening resource file").read_to_string(&mut resource_template).expect("reading resource file");
 
-    let grammar_rs = PathBuf::from(format!("{}/grammar.rs", env::var("OUT_DIR").expect("OUT_DIR env var nonexistant/non-Unicode")));
+    write!(File::create(format!("{}/openalias.rs-manifest.rc", out_dir)).expect("creating resource file"),
+           "#define FILE_VERSION_COMMAS {}\n\
+            #define FILE_VERSION_STRING \"{}\"\n\
+            \n\
+            {}",
+           env::var("CARGO_PKG_VERSION").expect("CARGO_PKG_VERSION env var nonexistant/non-Unicode").replace('.', ",") + ",0",
+           env::var("CARGO_PKG_VERSION").expect("CARGO_PKG_VERSION env var nonexistant/non-Unicode"),
+           resource_template)
+        .expect("writing resource file");
+    embed_resource::compile(format!("{}/openalias.rs-manifest.rc", out_dir));
+
+
+    let grammar_rs = PathBuf::from(format!("{}/grammar.rs", out_dir));
     peg::cargo_build("src/grammar.rustpeg");
     let _ = rustfmt::run(rustfmt::Input::File(grammar_rs.clone()),
                          &rustfmt::config::Config::from_toml_path(Path::new("rustfmt.toml")).expect("constructing rustfmt::Config from rustfmt.toml"));
