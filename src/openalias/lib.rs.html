@@ -57,17 +57,25 @@
 <span id="12">12</span>
 <span id="13">13</span>
 <span id="14">14</span>
+<span id="15">15</span>
+<span id="16">16</span>
+<span id="17">17</span>
+<span id="18">18</span>
 </pre><pre class="rust ">
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">resolve</span>;
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">clap</span>;
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">crc</span>;
 
 <span class="kw">mod</span> <span class="ident">error</span>;
 <span class="kw">mod</span> <span class="ident">grammar</span>;
 <span class="kw">mod</span> <span class="ident">address</span>;
+<span class="kw">mod</span> <span class="ident">options</span>;
 <span class="kw">mod</span> <span class="ident">resolving</span>;
 <span class="kw">mod</span> <span class="ident">crypto_addr</span>;
 
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">error</span>::<span class="ident">Error</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">options</span>::<span class="ident">Options</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">grammar</span>::<span class="ident">ParseError</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">address</span>::<span class="ident">alias_to_fqdn</span>;
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">crypto_addr</span>::<span class="ident">CryptoAddress</span>;
