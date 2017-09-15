@@ -90,6 +90,12 @@
 <span id="45">45</span>
 <span id="46">46</span>
 <span id="47">47</span>
+<span id="48">48</span>
+<span id="49">49</span>
+<span id="50">50</span>
+<span id="51">51</span>
+<span id="52">52</span>
+<span id="53">53</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! This module contains the configuration of the application.</span>
 <span class="doccomment">//!</span>
@@ -117,6 +123,10 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// Default: `false`.</span>
     <span class="kw">pub</span> <span class="ident">verbose</span>: <span class="ident">bool</span>,
+    <span class="doccomment">/// Just print the record text.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Default: `false`.</span>
+    <span class="kw">pub</span> <span class="ident">raw</span>: <span class="ident">bool</span>,
 }
 
 <span class="kw">impl</span> <span class="ident">Options</span> {
@@ -126,11 +136,13 @@
             .<span class="ident">setting</span>(<span class="ident">AppSettings</span>::<span class="ident">ColoredHelp</span>)
             .<span class="ident">arg</span>(<span class="ident">Arg</span>::<span class="ident">from_usage</span>(<span class="string">&quot;&lt;OPEN_ALIAS&gt;... &#39;Aliases to look up&#39;&quot;</span>).<span class="ident">validator</span>(<span class="ident">Options</span>::<span class="ident">open_alias_validator</span>).<span class="ident">required</span>(<span class="bool-val">true</span>))
             .<span class="ident">arg</span>(<span class="ident">Arg</span>::<span class="ident">from_usage</span>(<span class="string">&quot;-v --verbose &#39;Print out more information&#39;&quot;</span>))
+            .<span class="ident">arg</span>(<span class="ident">Arg</span>::<span class="ident">from_usage</span>(<span class="string">&quot;-r --raw &#39;Print just the record text&#39;&quot;</span>))
             .<span class="ident">get_matches</span>();
 
         <span class="ident">Options</span> {
             <span class="ident">aliases</span>: <span class="ident">matches</span>.<span class="ident">values_of</span>(<span class="string">&quot;OPEN_ALIAS&quot;</span>).<span class="ident">unwrap</span>().<span class="ident">map</span>(<span class="ident">String</span>::<span class="ident">from</span>).<span class="ident">collect</span>(),
             <span class="ident">verbose</span>: <span class="ident">matches</span>.<span class="ident">is_present</span>(<span class="string">&quot;verbose&quot;</span>),
+            <span class="ident">raw</span>: <span class="ident">matches</span>.<span class="ident">is_present</span>(<span class="string">&quot;raw&quot;</span>),
         }
     }
 

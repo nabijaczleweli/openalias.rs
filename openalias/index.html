@@ -48,8 +48,145 @@
                    <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
                        [<span class='inner'>&#x2212;</span>]
                    </a>
-               </span><a class='srclink' href='../src/openalias/lib.rs.html#1-18' title='goto source code'>[src]</a></span></h1>
-<h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
+               </span><a class='srclink' href='../src/openalias/lib.rs.html#1-177' title='goto source code'>[src]</a></span></h1>
+<div class='docblock'><p>Look up and parse <a href="https://openalias.org">OpenAlias</a> data.</p>
+
+<h1 id='openaliasrs-as-а-library' class='section-header'><a href='#openaliasrs-as-а-library'>openalias.rs as а library</a></h1>
+<p>This library can be used on a couple different levels (basic-&gt;high-level):</p>
+
+<ol>
+<li>Parsing/validating OpenAlias &quot;names&quot; (e.g. &quot;<a href="mailto:donate@getmonero.org">donate@getmonero.org</a>&quot;, &quot;nabijaczleweli.xyz&quot;)</li>
+<li>Parsing/validating OpenAlias records (e.g. &quot;oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H;
+recipient_name=Monero Development; tx_description=Donation to Monero Core Team;&quot;)</li>
+<li>Looking up OpenAliases with the DNS (e.g. &quot;donate.nabijaczleweli.xyz&quot; -&gt; <code>CryptoAddress</code>)</li>
+</ol>
+
+<p>In that order, examples:</p>
+
+<pre class="rust rust-example-rendered">
+<span class="comment">// Normally a user would type this in.</span>
+<span class="kw">let</span> <span class="ident">address</span> <span class="op">=</span> <span class="string">&quot;donate@getmonero.org&quot;</span>;
+
+<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">fqdn</span>) <span class="op">=</span> <span class="ident">openalias</span>::<span class="ident">alias_to_fqdn</span>(<span class="string">&quot;donate@getmonero.org&quot;</span>) {
+    <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{} maps to {}&quot;</span>, <span class="ident">address</span>, <span class="ident">fqdn</span>);
+} <span class="kw">else</span> {
+    <span class="comment">// Address is not an OpenAlias</span>
+}</pre>
+
+<p>Consult the <a href="fn.alias_to_fqdn.html"><code>alias_to_fqdn()</code></a> documentation for more information and examples.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="kw">let</span> <span class="ident">record</span> <span class="op">=</span> <span class="string">&quot;oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; \
+                      recipient_name=Monero Development; \
+                      tx_description=Donation to Monero Core Team;&quot;</span>;
+
+<span class="kw">match</span> <span class="ident">record</span>.<span class="ident">parse</span>::<span class="op">&lt;</span><span class="ident">openalias</span>::<span class="ident">CryptoAddress</span><span class="op">&gt;</span>() {
+    <span class="prelude-val">Ok</span>(<span class="ident">ca</span>) <span class="op">=&gt;</span> {
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{} address: {}&quot;</span>, <span class="ident">ca</span>.<span class="ident">cryptocurrency</span>.<span class="ident">to_uppercase</span>(), <span class="ident">ca</span>.<span class="ident">address</span>);
+        <span class="comment">// Probably also handle more fields</span>
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
+        <span class="comment">// The record is not an OpenAlias record,</span>
+        <span class="comment">//   see err variable so as to the position of failure.</span>
+    }
+}</pre>
+
+<p>Consult the <a href="struct.CryptoAddress.html"><code>CryptoAddress</code></a> documentation for more information and examples.</p>
+
+<pre class="rust rust-example-rendered">
+<span class="comment">// Normally a user would type this in.</span>
+<span class="kw">let</span> <span class="ident">alias</span> <span class="op">=</span> <span class="string">&quot;donate.nabijaczleweli.xyz&quot;</span>;
+
+<span class="kw">match</span> <span class="ident">openalias</span>::<span class="ident">address_strings</span>(<span class="ident">alias</span>) {
+    <span class="prelude-val">Ok</span>(<span class="ident">cas</span>) <span class="op">=&gt;</span> {
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{} addresses&quot;</span>, <span class="ident">cas</span>.<span class="ident">len</span>());
+        <span class="comment">// cas contains &quot;oa1:&quot;-prefixed records</span>
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
+        <span class="comment">// alias isn&#39;t an OpenAlias, or there was an error talking with a DNS server</span>
+    }
+}
+
+<span class="kw">match</span> <span class="ident">openalias</span>::<span class="ident">addresses</span>(<span class="ident">alias</span>) {
+    <span class="prelude-val">Ok</span>(<span class="ident">cas</span>) <span class="op">=&gt;</span> {
+        <span class="macro">println</span><span class="macro">!</span>(<span class="string">&quot;{} addresses&quot;</span>, <span class="ident">cas</span>.<span class="ident">len</span>());
+        <span class="comment">// cas contains CryptoAddresses</span>
+    }
+    <span class="prelude-val">Err</span>(<span class="ident">err</span>) <span class="op">=&gt;</span> {
+        <span class="comment">// alias isn&#39;t an OpenAlias,</span>
+        <span class="comment">//   or there was an error talking with a DNS server, or an &quot;oa1:&quot;-prefixed record isn&#39;t an</span>
+        <span class="comment">//   or an &quot;oa1:&quot;-prefixed record isn&#39;t an OpenAlias record.</span>
+    }
+}</pre>
+
+<p>Consult the <a href="fn.address_strings.html"><code>address_strings()</code></a> and <a href="fn.addresses.html"><code>addresses()</code></a>
+documentation for more information and examples.</p>
+
+<h1 id='openaliasrs-as-аn-executable' class='section-header'><a href='#openaliasrs-as-аn-executable'>openalias.rs as аn executable</a></h1>
+<p>This is just a very short synopsis of
+<a href="https://cdn.rawgit.com/nabijaczleweli/openalias.rs/man/openalias.1.html">the manpage</a>,
+so consult that for more data.</p>
+
+<h2 id='options' class='section-header'><a href='#options'>OPTIONS</a></h2>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+<td>&lt;OPEN_ALIAS&gt;...</td>
+<td>FQDN or email-style aliases to look up addresses for.</td>
+</tr>
+<tr>
+<td>--verbose</td>
+<td>Print more data about what&#39;s happenning to stderr.</td>
+</tr>
+<tr>
+<td>--raw</td>
+<td>Print just the record text.</td>
+</tr>
+</tbody>
+</table>
+
+<h2 id='examples' class='section-header'><a href='#examples'>EXAMPLES</a></h2>
+<p><code>openalias nabijaczleweli.xyz donate.getmonero.org</code></p>
+
+<pre><code class="language-text">Addresses of nabijaczleweli.xyz:
+  btc:
+    nabijaczleweli
+    1CgLs6CxXMAY4Pj4edQq5vyaFoP9NdqVKH
+
+Addresses of donate.getmonero.org:
+  xmr:
+    Monero Development
+    44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3
+      XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A
+    Donation to Monero Core Team
+  btc:
+    Monero Development
+    1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H
+    Donation to Monero Core Team
+</code></pre>
+
+<p><code>openalias -rv nabijaczleweli.xyz donate@getmonero.org</code></p>
+
+<pre><code class="language-text">Looking up nabijaczleweli.xyz...
+Addresses for nabijaczleweli.xyz:
+  oa1:btc recipient_address=1CgLs6CxXMAY4Pj4edQq5vyaFoP9NdqVKH; recipient_name=nabijaczleweli;
+
+Looking up donate@getmonero.org...
+Addresses for donate@getmonero.org:
+  oa1:xmr recipient_address=44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3
+                              XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A;
+          recipient_name=Monero Development; tx_description=Donation to Monero Core Team;
+  oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; recipient_name=Monero Development;
+          tx_description=Donation to Monero Core Team;
+</code></pre>
+</div><h2 id='structs' class='section-header'><a href="#structs">Structs</a></h2>
 <table>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.CryptoAddress.html"
