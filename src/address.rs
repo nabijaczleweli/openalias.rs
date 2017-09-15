@@ -11,17 +11,17 @@
 /// # Examples
 ///
 /// ```
-/// # use openalias::parse_openalias;
-/// assert_eq!(parse_openalias("donate.getmonero.org"),
+/// # use openalias::alias_to_fqdn;
+/// assert_eq!(alias_to_fqdn("donate.getmonero.org"),
 ///            Some("donate.getmonero.org.".to_string()));
-/// assert_eq!(parse_openalias("donate@nabijaczleweli.xyz"),
+/// assert_eq!(alias_to_fqdn("donate@nabijaczleweli.xyz"),
 ///            Some("donate.nabijaczleweli.xyz.".to_string()));
-/// assert_eq!(parse_openalias("nabijaczleweli.xyz."),
+/// assert_eq!(alias_to_fqdn("nabijaczleweli.xyz."),
 ///            Some("nabijaczleweli.xyz.".to_string()));
 ///
-/// assert_eq!(parse_openalias("nabijaczleweli"), None);
+/// assert_eq!(alias_to_fqdn("nabijaczleweli"), None);
 /// ```
-pub fn parse_openalias(alias: &str) -> Option<String> {
+pub fn alias_to_fqdn(alias: &str) -> Option<String> {
     let mut alias = alias.replace("@", ".");
     if alias.contains('.') {
         if !alias.ends_with('.') {

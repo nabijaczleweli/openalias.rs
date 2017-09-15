@@ -1,4 +1,4 @@
-use self::super::{CryptoAddress, Error, parse_openalias};
+use self::super::{CryptoAddress, Error, alias_to_fqdn};
 use resolve::{DnsResolver, DnsConfig, default_config};
 use std::iter::FromIterator;
 use std::time::Duration;
@@ -77,7 +77,7 @@ pub fn address_strings(address: &str) -> Result<Vec<String>, Error> {
             }
         }))
         ?
-        .resolve_record::<record::Txt>(&parse_openalias(address).ok_or(Error::AddressParse)?)?
+        .resolve_record::<record::Txt>(&alias_to_fqdn(address).ok_or(Error::AddressParse)?)?
         .into_iter()
         .map(|r| r.data)
         .filter(|s| s.starts_with(b"oa1:"))

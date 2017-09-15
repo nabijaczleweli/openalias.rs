@@ -4,9 +4,9 @@ use std::str::FromStr;
 
 
 fn main() {
-    println!("{:#?}", openalias::parse_openalias("nabijaczleweli.xyz"));
-    println!("{:#?}", openalias::parse_openalias("nabijaczleweli xyz"));
-    println!("{:#?}", openalias::parse_openalias("donate@nabijaczleweli.xyz"));
+    println!("{:#?}", openalias::alias_to_fqdn("nabijaczleweli.xyz"));
+    println!("{:#?}", openalias::alias_to_fqdn("nabijaczleweli xyz"));
+    println!("{:#?}", openalias::alias_to_fqdn("donate@nabijaczleweli.xyz"));
     println!("{:#?}", openalias::address_strings("nabijaczleweli"));
     println!("{:#?}", openalias::address_strings("nabijaczleweli.xyz"));
     println!("{:#?}", openalias::addresses("donate.getmonero.org."));

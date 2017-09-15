@@ -9,6 +9,6 @@ mod crypto_addr;
 
 pub use self::error::Error;
 pub use self::grammar::ParseError;
-pub use self::address::parse_openalias;
+pub use self::address::alias_to_fqdn;
 pub use self::crypto_addr::CryptoAddress;
 pub use self::resolving::{address_strings, addresses};
