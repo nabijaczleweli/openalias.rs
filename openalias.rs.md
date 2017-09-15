@@ -3,7 +3,7 @@ openalias.rs(1) -- Securely look up and parse OpenAlias data
 
 ## SYNOPSIS
 
-`openalias` &lt;OPEN_ALIAS&gt;...
+`openalias` &lt;OPEN_ALIAS&gt;... [OPTIONS]
 
 ## DESCRIPTION
 
@@ -20,11 +20,30 @@ in order to ensure that your lookups are safe.
 
     FQDN or email-style aliases to look up addresses for.
 
+  -v --verbose
+
+    Print more data about what's happenning to stderr.
+
+    Default: don't.
+
 ## EXAMPLES
 
   `openalias nabijaczleweli.xyz donate.getmonero.org`
 
-    TODO
+    Addresses of nabijaczleweli.xyz:
+      btc:
+        nabijaczleweli
+        1CgLs6CxXMAY4Pj4edQq5vyaFoP9NdqVKH
+
+    Addresses of donate.getmonero.org:
+      xmr:
+        Monero Development
+        44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A
+        Donation to Monero Core Team
+      btc:
+        Monero Development
+        1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H
+        Donation to Monero Core Team
 
 ## AUTHOR
 

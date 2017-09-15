@@ -7,7 +7,7 @@
 \fBopenalias\.rs\fR \- Securely look up and parse OpenAlias data
 .
 .SH "SYNOPSIS"
-\fBopenalias\fR <OPEN_ALIAS>\.\.\.
+\fBopenalias\fR <OPEN_ALIAS>\.\.\. \fIOPTIONS\fR
 .
 .SH "DESCRIPTION"
 Securely look up and parse OpenAlias data\.
@@ -31,6 +31,21 @@ FQDN or email\-style aliases to look up addresses for\.
 .
 .IP "" 0
 .
+.P
+\-v \-\-verbose
+.
+.IP "" 4
+.
+.nf
+
+Print more data about what\'s happenning to stderr\.
+
+Default: don\'t\.
+.
+.fi
+.
+.IP "" 0
+.
 .SH "EXAMPLES"
 \fBopenalias nabijaczleweli\.xyz donate\.getmonero\.org\fR
 .
@@ -38,7 +53,20 @@ FQDN or email\-style aliases to look up addresses for\.
 .
 .nf
 
-TODO
+Addresses of nabijaczleweli\.xyz:
+  btc:
+    nabijaczleweli
+    1CgLs6CxXMAY4Pj4edQq5vyaFoP9NdqVKH
+
+Addresses of donate\.getmonero\.org:
+  xmr:
+    Monero Development
+    44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A
+    Donation to Monero Core Team
+  btc:
+    Monero Development
+    1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H
+    Donation to Monero Core Team
 .
 .fi
 .
