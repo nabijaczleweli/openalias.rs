@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv='content-type' value='text/html;charset=utf8'>
   <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
-  <title>openalias.rs(1) - Securely look up and parse OpenAlias data</title>
+  <title>openalias.rs(1) - Look up and parse OpenAlias data</title>
   <style type='text/css' media='all'>
   /* style: man */
   body#manpage {margin:0}
@@ -71,7 +71,7 @@
 
   <h2 id="NAME">NAME</h2>
 <p class="man-name">
-  <code>openalias.rs</code> - <span class="man-whatis">Securely look up and parse OpenAlias data</span>
+  <code>openalias.rs</code> - <span class="man-whatis">Look up and parse OpenAlias data</span>
 </p>
 
 <h2 id="SYNOPSIS">SYNOPSIS</h2>
@@ -80,12 +80,9 @@
 
 <h2 id="DESCRIPTION">DESCRIPTION</h2>
 
-<p>Securely look up and parse OpenAlias data.</p>
+<p>Look up and parse OpenAlias data.</p>
 
 <p>OpenAlias is an open DNS-based name to cryptocurrency address mapping format.</p>
-
-<p><code>openalias.rs</code> utilises DNSCrypt and official OpenAlias DNS servers
-in order to ensure that your lookups are safe.</p>
 
 <h2 id="OPTIONS">OPTIONS</h2>
 
@@ -99,6 +96,13 @@ in order to ensure that your lookups are safe.</p>
 <pre><code>Print more data about what's happenning to stderr.
 
 Default: don't.
+</code></pre>
+
+<p>  -r --raw</p>
+
+<pre><code>Print just the record text.
+
+Default: pretty-printing.
 </code></pre>
 
 <h2 id="EXAMPLES">EXAMPLES</h2>
@@ -121,9 +125,21 @@ Addresses of donate.getmonero.org:
     Donation to Monero Core Team
 </code></pre>
 
+<p>  <code>openalias -rv nabijaczleweli.xyz donate@getmonero.org</code></p>
+
+<pre><code>Looking up nabijaczleweli.xyz...
+Addresses for nabijaczleweli.xyz:
+  oa1:btc recipient_address=1CgLs6CxXMAY4Pj4edQq5vyaFoP9NdqVKH; recipient_name=nabijaczleweli;
+
+Looking up donate@getmonero.org...
+Addresses for donate@getmonero.org:
+  oa1:xmr recipient_address=44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A; recipient_name=Monero Development; tx_description=Donation to Monero Core Team;
+  oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; recipient_name=Monero Development; tx_description=Donation to Monero Core Team;
+</code></pre>
+
 <h2 id="AUTHOR">AUTHOR</h2>
 
-<p>Written by nabijaczleweli &lt;<a href="&#x6d;&#x61;&#105;&#108;&#x74;&#x6f;&#x3a;&#x6e;&#97;&#x62;&#x69;&#106;&#97;&#99;&#122;&#108;&#x65;&#x77;&#101;&#108;&#105;&#x40;&#103;&#109;&#97;&#105;&#x6c;&#x2e;&#x63;&#111;&#x6d;" data-bare-link="true">&#110;&#97;&#x62;&#105;&#x6a;&#97;&#x63;&#122;&#108;&#101;&#x77;&#101;&#x6c;&#105;&#x40;&#x67;&#x6d;&#97;&#x69;&#x6c;&#46;&#99;&#x6f;&#x6d;</a>&gt;</p>
+<p>Written by nabijaczleweli &lt;<a href="&#x6d;&#x61;&#x69;&#x6c;&#116;&#x6f;&#58;&#x6e;&#97;&#x62;&#105;&#x6a;&#x61;&#99;&#122;&#x6c;&#101;&#x77;&#101;&#108;&#105;&#64;&#x67;&#109;&#x61;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;" data-bare-link="true">&#x6e;&#97;&#x62;&#105;&#106;&#97;&#99;&#x7a;&#108;&#x65;&#x77;&#x65;&#x6c;&#105;&#x40;&#103;&#109;&#x61;&#105;&#108;&#x2e;&#99;&#x6f;&#x6d;</a>&gt;</p>
 
 <h2 id="REPORTING-BUGS">REPORTING BUGS</h2>
 
