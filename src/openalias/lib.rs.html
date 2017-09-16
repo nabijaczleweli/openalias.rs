@@ -220,6 +220,20 @@
 <span id="175">175</span>
 <span id="176">176</span>
 <span id="177">177</span>
+<span id="178">178</span>
+<span id="179">179</span>
+<span id="180">180</span>
+<span id="181">181</span>
+<span id="182">182</span>
+<span id="183">183</span>
+<span id="184">184</span>
+<span id="185">185</span>
+<span id="186">186</span>
+<span id="187">187</span>
+<span id="188">188</span>
+<span id="189">189</span>
+<span id="190">190</span>
+<span id="191">191</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Look up and parse [OpenAlias](https://openalias.org) data.</span>
 <span class="doccomment">//!</span>
@@ -238,7 +252,7 @@
 <span class="doccomment">//! // Normally a user would type this in.</span>
 <span class="doccomment">//! let address = &quot;donate@getmonero.org&quot;;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! if let Some(fqdn) = openalias::alias_to_fqdn(&quot;donate@getmonero.org&quot;) {</span>
+<span class="doccomment">//! if let Some(fqdn) = openalias::alias_to_fqdn(address) {</span>
 <span class="doccomment">//!     println!(&quot;{} maps to {}&quot;, address, fqdn);</span>
 <span class="doccomment">//! #   assert_eq!(fqdn, &quot;donate.getmonero.org.&quot;);</span>
 <span class="doccomment">//! } else {</span>
@@ -317,7 +331,7 @@
 <span class="doccomment">//!     }</span>
 <span class="doccomment">//!     Err(err) =&gt; {</span>
 <span class="doccomment">//!         // alias isn&#39;t an OpenAlias,</span>
-<span class="doccomment">//!         //   or there was an error talking with a DNS server, or an &quot;oa1:&quot;-prefixed record isn&#39;t an</span>
+<span class="doccomment">//!         //   or there was an error talking with a DNS server,</span>
 <span class="doccomment">//!         //   or an &quot;oa1:&quot;-prefixed record isn&#39;t an OpenAlias record.</span>
 <span class="doccomment">//! #       assert!(false);</span>
 <span class="doccomment">//!     }</span>
@@ -335,11 +349,12 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## OPTIONS</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! | Option                | Description                                           |</span>
-<span class="doccomment">//! |-----------------------|-------------------------------------------------------|</span>
-<span class="doccomment">//! | &amp;lt;OPEN_ALIAS&amp;gt;... | FQDN or email-style aliases to look up addresses for. |</span>
-<span class="doccomment">//! | --verbose             | Print more data about what&#39;s happenning to stderr.    |</span>
-<span class="doccomment">//! | --raw                 | Print just the record text.                           |</span>
+<span class="doccomment">//! | Option                   | Description                                           |</span>
+<span class="doccomment">//! |--------------------------|-------------------------------------------------------|</span>
+<span class="doccomment">//! | &amp;lt;OPEN_ALIAS&amp;gt;...    | FQDN or email-style aliases to look up addresses for. |</span>
+<span class="doccomment">//! | --verbose                | Print more data about what&#39;s happenning to stderr.    |</span>
+<span class="doccomment">//! | --raw                    | Print just the record text.                           |</span>
+<span class="doccomment">//! | --currency=[CURRENCY]... | Limit results to specified currencies.                |</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! ## EXAMPLES</span>
 <span class="doccomment">//!</span>
@@ -377,6 +392,19 @@
 <span class="doccomment">//!           recipient_name=Monero Development; tx_description=Donation to Monero Core Team;</span>
 <span class="doccomment">//!   oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; recipient_name=Monero Development;</span>
 <span class="doccomment">//!           tx_description=Donation to Monero Core Team;</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! `openalias -cxmr -c doge nabijaczleweli.xyz donate.getmonero.org`</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ```text</span>
+<span class="doccomment">//! No xmr, nor doge addresses found for nabijaczleweli.xyz.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Addresses of donate.getmonero.org:</span>
+<span class="doccomment">//!   xmr:</span>
+<span class="doccomment">//!     Monero Development</span>
+<span class="doccomment">//!     44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3</span>
+<span class="doccomment">//!       XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A</span>
+<span class="doccomment">//!     Donation to Monero Core Team</span>
 <span class="doccomment">//! ```</span>
 
 
