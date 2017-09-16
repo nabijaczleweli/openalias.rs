@@ -20,6 +20,10 @@ use clap::{AppSettings, Arg};
 pub struct Options {
     /// Aliases to look up.
     pub aliases: Vec<String>,
+    /// Print more information.
+    ///
+    /// Default: `false`.
+    pub verbose: bool,
 }
 
 impl Options {
@@ -28,9 +32,13 @@ impl Options {
         let matches = app_from_crate!("\n")
             .setting(AppSettings::ColoredHelp)
             .arg(Arg::from_usage("<OPEN_ALIAS>... 'Aliases to look up'").validator(Options::open_alias_validator).required(true))
+            .arg(Arg::from_usage("-v --verbose 'Print out more information'"))
             .get_matches();
 
-        Options { aliases: matches.values_of("OPEN_ALIAS").unwrap().map(String::from).collect() }
+        Options {
+            aliases: matches.values_of("OPEN_ALIAS").unwrap().map(String::from).collect(),
+            verbose: matches.is_present("verbose"),
+        }
     }
 
     fn open_alias_validator(s: String) -> Result<(), String> {

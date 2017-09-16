@@ -8,7 +8,7 @@ use std::io::Write;
 /// [OpenAlias](https://openalias.org)-parsed cryptocurrency address.
 ///
 /// `Display`ing an address with a checksum will *not* print out the same sum, but will re-hash the output string
-/// (since the output can, while functionally equivalent, differ).
+/// (since the output can, while functionally equivalent, be different).
 ///
 /// # Examples
 ///
