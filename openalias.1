@@ -58,6 +58,19 @@ Default: pretty\-printing\.
 .
 .IP "" 0
 .
+.P
+\-c \-\-currency=CURRENCY\.\.\.
+.
+.IP "" 4
+.
+.nf
+
+Limit results to specified currencies\.
+.
+.fi
+.
+.IP "" 0
+.
 .SH "EXAMPLES"
 \fBopenalias nabijaczleweli\.xyz donate\.getmonero\.org\fR
 .
@@ -106,6 +119,26 @@ Addresses for donate@getmonero\.org:
   oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H;
           recipient_name=Monero Development;
           tx_description=Donation to Monero Core Team;
+.
+.fi
+.
+.IP "" 0
+.
+.P
+\fBopenalias \-cxmr \-c doge nabijaczleweli\.xyz donate\.getmonero\.org\fR
+.
+.IP "" 4
+.
+.nf
+
+No xmr, nor doge addresses found for nabijaczleweli\.xyz\.
+
+Addresses of donate\.getmonero\.org:
+  xmr:
+    Monero Development
+    44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3
+      XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A
+    Donation to Monero Core Team
 .
 .fi
 .

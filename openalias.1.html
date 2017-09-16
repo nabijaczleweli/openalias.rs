@@ -105,6 +105,11 @@ Default: don't.
 Default: pretty-printing.
 </code></pre>
 
+<p>  -c --currency=CURRENCY...</p>
+
+<pre><code>Limit results to specified currencies.
+</code></pre>
+
 <h2 id="EXAMPLES">EXAMPLES</h2>
 
 <p>  <code>openalias nabijaczleweli.xyz donate.getmonero.org</code></p>
@@ -144,9 +149,21 @@ Addresses for donate@getmonero.org:
           tx_description=Donation to Monero Core Team;
 </code></pre>
 
+<p>  <code>openalias -cxmr -c doge nabijaczleweli.xyz donate.getmonero.org</code></p>
+
+<pre><code>No xmr, nor doge addresses found for nabijaczleweli.xyz.
+
+Addresses of donate.getmonero.org:
+  xmr:
+    Monero Development
+    44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3
+      XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A
+    Donation to Monero Core Team
+</code></pre>
+
 <h2 id="AUTHOR">AUTHOR</h2>
 
-<p>Written by nabijaczleweli &lt;<a href="&#x6d;&#97;&#105;&#108;&#116;&#111;&#58;&#110;&#97;&#x62;&#105;&#106;&#97;&#x63;&#x7a;&#x6c;&#101;&#119;&#x65;&#108;&#105;&#64;&#x67;&#109;&#97;&#x69;&#108;&#46;&#x63;&#x6f;&#109;" data-bare-link="true">&#110;&#x61;&#x62;&#105;&#106;&#x61;&#99;&#122;&#x6c;&#101;&#119;&#x65;&#108;&#x69;&#x40;&#103;&#109;&#x61;&#x69;&#108;&#x2e;&#99;&#x6f;&#x6d;</a>&gt;</p>
+<p>Written by nabijaczleweli &lt;<a href="&#109;&#97;&#x69;&#108;&#x74;&#111;&#58;&#110;&#97;&#x62;&#x69;&#106;&#x61;&#x63;&#x7a;&#x6c;&#101;&#119;&#101;&#108;&#x69;&#x40;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#x6f;&#x6d;" data-bare-link="true">&#110;&#x61;&#98;&#105;&#x6a;&#97;&#99;&#x7a;&#108;&#x65;&#x77;&#101;&#x6c;&#105;&#x40;&#103;&#109;&#97;&#x69;&#x6c;&#x2e;&#99;&#111;&#109;</a>&gt;</p>
 
 <h2 id="REPORTING-BUGS">REPORTING BUGS</h2>
 

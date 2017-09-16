@@ -29,6 +29,10 @@ OpenAlias is an open DNS-based name to cryptocurrency address mapping format.
 
     Default: pretty-printing.
 
+  -c --currency=CURRENCY...
+
+    Limit results to specified currencies.
+
 ## EXAMPLES
 
   `openalias nabijaczleweli.xyz donate.getmonero.org`
@@ -65,6 +69,17 @@ OpenAlias is an open DNS-based name to cryptocurrency address mapping format.
       oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H;
               recipient_name=Monero Development;
               tx_description=Donation to Monero Core Team;
+
+  `openalias -cxmr -c doge nabijaczleweli.xyz donate.getmonero.org`
+
+    No xmr, nor doge addresses found for nabijaczleweli.xyz.
+
+    Addresses of donate.getmonero.org:
+      xmr:
+        Monero Development
+        44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft3
+          XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A
+        Donation to Monero Core Team
 
 ## AUTHOR
 
