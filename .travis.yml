@@ -5,7 +5,7 @@ cache:
 
 matrix:
   include:
-    - env: LANGUAGE=Rust DEPLOY=true DEPLOY_FILE="$TRAVIS_BUILD_DIR/../cargo-install-update-$TRAVIS_TAG.tbz2"
+    - env: LANGUAGE=Rust DEPLOY=true DEPLOY_FILE="$TRAVIS_BUILD_DIR/../openalias-$TRAVIS_TAG"
       language: rust
       rust: stable
     - env: LANGUAGE=Rust
@@ -51,10 +51,10 @@ script:
 
 after_success:
   - if [ "$LANGUAGE" == "Rust" ] && [ "$DEPLOY" ] && [ "$TRAVIS_TAG" ] && [ "$TRAVIS_SECURE_ENV_VARS" == "true" ]; then
-      cp target/release/cargo-install-update target/release/cargo-install-update-config "$TRAVIS_BUILD_DIR/..";
+      cp target/release/openalias "$TRAVIS_BUILD_DIR/..";
       pushd "$TRAVIS_BUILD_DIR/..";
-      strip --strip-all --remove-section=.comment --remove-section=.note cargo-install-update cargo-install-update-config;
-      tar -caf "cargo-install-update-$TRAVIS_TAG.tbz2" cargo-install-update cargo-install-update-config;
+      strip --strip-all --remove-section=.comment --remove-section=.note openalias;
+      tar -caf "openalias-$TRAVIS_TAG" openalias;
       popd;
     fi
   - if [ "$LANGUAGE" == "Rust-doc" ]; then
