@@ -24,6 +24,10 @@ pub struct Options {
     ///
     /// Default: `false`.
     pub verbose: bool,
+    /// Just print the record text.
+    ///
+    /// Default: `false`.
+    pub raw: bool,
 }
 
 impl Options {
@@ -33,11 +37,13 @@ impl Options {
             .setting(AppSettings::ColoredHelp)
             .arg(Arg::from_usage("<OPEN_ALIAS>... 'Aliases to look up'").validator(Options::open_alias_validator).required(true))
             .arg(Arg::from_usage("-v --verbose 'Print out more information'"))
+            .arg(Arg::from_usage("-r --raw 'Print just the record text'"))
             .get_matches();
 
         Options {
             aliases: matches.values_of("OPEN_ALIAS").unwrap().map(String::from).collect(),
             verbose: matches.is_present("verbose"),
+            raw: matches.is_present("raw"),
         }
     }
 
