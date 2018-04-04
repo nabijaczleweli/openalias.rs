@@ -10,8 +10,11 @@
     <title>resolve::message::MsgWriter - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
+    <script src="../../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Struct MsgWriter</p><div class="block items"><ul><li><a href="#methods">Methods</a></li></ul></div><p class='location'><a href='../index.html'>resolve</a>::<wbr><a href='index.html'>message</a></p><script>window.sidebarCurrent = {name: 'MsgWriter', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script>
+        <p class='location'>Struct MsgWriter</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.new">new</a><a href="#method.written">written</a><a href="#method.into_bytes">into_bytes</a><a href="#method.write">write</a><a href="#method.write_character_string">write_character_string</a><a href="#method.write_name">write_name</a><a href="#method.write_byte">write_byte</a><a href="#method.write_u16">write_u16</a><a href="#method.write_u32">write_u32</a></div></div><p class='location'><a href='../index.html'>resolve</a>::<wbr><a href='index.html'>message</a></p><script>window.sidebarCurrent = {name: 'MsgWriter', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,26 +61,30 @@
                    </a>
                </span><a class='srclink' href='../../src/resolve/message.rs.html#383-385' title='goto source code'>[src]</a></span></h1>
 <pre class='rust struct'>pub struct MsgWriter&lt;'a&gt; { /* fields omitted */ }</pre><div class='docblock'><p>Writes a single DNS message as a series of bytes.</p>
-</div><h2 id='methods'>Methods</h2><h3 class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../../resolve/message/struct.MsgWriter.html" title="struct resolve::message::MsgWriter">MsgWriter</a>&lt;'a&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#387-558' title='goto source code'>[src]</a></span></h3>
-<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>fn <a href='#method.new' class='fnname'>new</a>(data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="struct" href="../../resolve/message/struct.MsgWriter.html" title="struct resolve::message::MsgWriter">MsgWriter</a></code></span></h4>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><code>impl&lt;'a&gt; <a class="struct" href="../../resolve/message/struct.MsgWriter.html" title="struct resolve::message::MsgWriter">MsgWriter</a>&lt;'a&gt;</code><a href='#impl' class='anchor'></a></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#387-558' title='goto source code'>[src]</a></span></h3>
+<div class='impl-items'><h4 id='method.new' class="method"><span id='new.v' class='invisible'><code>pub fn <a href='#method.new' class='fnname'>new</a>(data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;mut [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="struct" href="../../resolve/message/struct.MsgWriter.html" title="struct resolve::message::MsgWriter">MsgWriter</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#389-391' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Constructs a new message writer that will write into the given byte slice.</p>
-</div><h4 id='method.written' class="method"><span id='written.v' class='invisible'><code>fn <a href='#method.written' class='fnname'>written</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span></h4>
+</div><h4 id='method.written' class="method"><span id='written.v' class='invisible'><code>pub fn <a href='#method.written' class='fnname'>written</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.usize.html">usize</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#394-396' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns the number of bytes written so far.</p>
-</div><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><code>fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'a [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span></h4>
+</div><h4 id='method.into_bytes' class="method"><span id='into_bytes.v' class='invisible'><code>pub fn <a href='#method.into_bytes' class='fnname'>into_bytes</a>(self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;'a [</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a></code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#400-403' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Returns a subslice of the wrapped byte slice that contains only the
 bytes written.</p>
-</div><h4 id='method.write' class="method"><span id='write.v' class='invisible'><code>fn <a href='#method.write' class='fnname'>write</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span></h4>
+</div><h4 id='method.write' class="method"><span id='write.v' class='invisible'><code>pub fn <a href='#method.write' class='fnname'>write</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#407-415' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes a series of bytes to the message. Returns <code>Err(TooLong)</code> if the
 whole buffer cannot be written.</p>
-</div><h4 id='method.write_character_string' class="method"><span id='write_character_string.v' class='invisible'><code>fn <a href='#method.write_character_string' class='fnname'>write_character_string</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span></h4>
+</div><h4 id='method.write_character_string' class="method"><span id='write_character_string.v' class='invisible'><code>pub fn <a href='#method.write_character_string' class='fnname'>write_character_string</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">&amp;[</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.slice.html">]</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#418-427' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Write a character string, as defined by RFC 1035.</p>
-</div><h4 id='method.write_name' class="method"><span id='write_name.v' class='invisible'><code>fn <a href='#method.write_name' class='fnname'>write_name</a>(&amp;mut self, name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span></h4>
+</div><h4 id='method.write_name' class="method"><span id='write_name.v' class='invisible'><code>pub fn <a href='#method.write_name' class='fnname'>write_name</a>(&amp;mut self, name: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#430-472' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes a name to the message.</p>
-</div><h4 id='method.write_byte' class="method"><span id='write_byte.v' class='invisible'><code>fn <a href='#method.write_byte' class='fnname'>write_byte</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span></h4>
+</div><h4 id='method.write_byte' class="method"><span id='write_byte.v' class='invisible'><code>pub fn <a href='#method.write_byte' class='fnname'>write_byte</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#475-477' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes a single byte to the message.</p>
-</div><h4 id='method.write_u16' class="method"><span id='write_u16.v' class='invisible'><code>fn <a href='#method.write_u16' class='fnname'>write_u16</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span></h4>
+</div><h4 id='method.write_u16' class="method"><span id='write_u16.v' class='invisible'><code>pub fn <a href='#method.write_u16' class='fnname'>write_u16</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u16.html">u16</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#480-483' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes an unsigned 16 bit integer in big-endian format.</p>
-</div><h4 id='method.write_u32' class="method"><span id='write_u32.v' class='invisible'><code>fn <a href='#method.write_u32' class='fnname'>write_u32</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.tuple.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span></h4>
+</div><h4 id='method.write_u32' class="method"><span id='write_u32.v' class='invisible'><code>pub fn <a href='#method.write_u32' class='fnname'>write_u32</a>(&amp;mut self, data: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.unit.html">()</a>, <a class="enum" href="../../resolve/message/enum.EncodeError.html" title="enum resolve::message::EncodeError">EncodeError</a>&gt;</code></span><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/resolve/message.rs.html#486-489' title='goto source code'>[src]</a></span></h4>
 <div class='docblock'><p>Writes an unsigned 32 bit integer in big-endian format.</p>
 </div></div></section>
     <section id='search' class="content hidden"></section>
@@ -84,18 +99,22 @@ whole buffer cannot be written.</p>
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

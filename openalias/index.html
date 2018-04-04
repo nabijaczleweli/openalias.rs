@@ -10,8 +10,11 @@
     <title>openalias - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
-        <p class='location'>Crate openalias</p><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'openalias', ty: 'mod', relpath: '../'};</script>
+        <p class='location'>Crate openalias</p><div class="sidebar-elems"><div class="block items"><ul><li><a href="#structs">Structs</a></li><li><a href="#enums">Enums</a></li><li><a href="#functions">Functions</a></li></ul></div><p class='location'></p><script>window.sidebarCurrent = {name: 'openalias', ty: 'mod', relpath: '../'};</script></div>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,17 +61,14 @@
                    </a>
                </span><a class='srclink' href='../src/openalias/lib.rs.html#1-191' title='goto source code'>[src]</a></span></h1>
 <div class='docblock'><p>Look up and parse <a href="https://openalias.org">OpenAlias</a> data.</p>
-
-<h1 id='openaliasrs-as-а-library' class='section-header'><a href='#openaliasrs-as-а-library'>openalias.rs as а library</a></h1>
+<h1 id="openaliasrs-as-а-library" class="section-header"><a href="#openaliasrs-as-а-library">openalias.rs as а library</a></h1>
 <p>This library can be used on a couple different levels (basic-&gt;high-level):</p>
-
 <ol>
-<li>Parsing/validating OpenAlias &quot;names&quot; (e.g. &quot;<a href="mailto:donate@getmonero.org">donate@getmonero.org</a>&quot;, &quot;nabijaczleweli.xyz&quot;)</li>
+<li>Parsing/validating OpenAlias &quot;names&quot; (e.g. &quot;donate@getmonero.org&quot;, &quot;nabijaczleweli.xyz&quot;)</li>
 <li>Parsing/validating OpenAlias records (e.g. &quot;oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H;
 recipient_name=Monero Development; tx_description=Donation to Monero Core Team;&quot;)</li>
 <li>Looking up OpenAliases with the DNS (e.g. &quot;donate.nabijaczleweli.xyz&quot; -&gt; <code>CryptoAddress</code>)</li>
 </ol>
-
 <p>In that order, examples:</p>
 
 <pre class="rust rust-example-rendered">
@@ -72,7 +80,6 @@ recipient_name=Monero Development; tx_description=Donation to Monero Core Team;&
 } <span class="kw">else</span> {
     <span class="comment">// Address is not an OpenAlias</span>
 }</pre>
-
 <p>Consult the <a href="fn.alias_to_fqdn.html"><code>alias_to_fqdn()</code></a> documentation for more information and examples.</p>
 
 <pre class="rust rust-example-rendered">
@@ -90,7 +97,6 @@ recipient_name=Monero Development; tx_description=Donation to Monero Core Team;&
         <span class="comment">//   see err variable so as to the position of failure.</span>
     }
 }</pre>
-
 <p>Consult the <a href="struct.CryptoAddress.html"><code>CryptoAddress</code></a> documentation for more information and examples.</p>
 
 <pre class="rust rust-example-rendered">
@@ -118,47 +124,20 @@ recipient_name=Monero Development; tx_description=Donation to Monero Core Team;&
         <span class="comment">//   or an &quot;oa1:&quot;-prefixed record isn&#39;t an OpenAlias record.</span>
     }
 }</pre>
-
 <p>Consult the <a href="fn.address_strings.html"><code>address_strings()</code></a> and <a href="fn.addresses.html"><code>addresses()</code></a>
 documentation for more information and examples.</p>
-
-<h1 id='openaliasrs-as-аn-executable' class='section-header'><a href='#openaliasrs-as-аn-executable'>openalias.rs as аn executable</a></h1>
+<h1 id="openaliasrs-as-аn-executable" class="section-header"><a href="#openaliasrs-as-аn-executable">openalias.rs as аn executable</a></h1>
 <p>This is just a very short synopsis of
 <a href="https://cdn.rawgit.com/nabijaczleweli/openalias.rs/man/openalias.1.html">the manpage</a>,
 so consult that for more data.</p>
-
-<h2 id='options' class='section-header'><a href='#options'>OPTIONS</a></h2>
-<table>
-<thead>
-<tr>
-<th>Option</th>
-<th>Description</th>
-</tr>
-</thead>
-
-<tbody>
-<tr>
-<td>&lt;OPEN_ALIAS&gt;...</td>
-<td>FQDN or email-style aliases to look up addresses for.</td>
-</tr>
-<tr>
-<td>--verbose</td>
-<td>Print more data about what&#39;s happenning to stderr.</td>
-</tr>
-<tr>
-<td>--raw</td>
-<td>Print just the record text.</td>
-</tr>
-<tr>
-<td>--currency=[CURRENCY]...</td>
-<td>Limit results to specified currencies.</td>
-</tr>
-</tbody>
-</table>
-
-<h2 id='examples' class='section-header'><a href='#examples'>EXAMPLES</a></h2>
+<h2 id="options" class="section-header"><a href="#options">OPTIONS</a></h2><table><thead><tr><th> Option                   </th><th> Description                                           </th></tr></thead><tbody>
+<tr><td> &lt;OPEN_ALIAS&gt;...    </td><td> FQDN or email-style aliases to look up addresses for. </td></tr>
+<tr><td> --verbose                </td><td> Print more data about what's happenning to stderr.    </td></tr>
+<tr><td> --raw                    </td><td> Print just the record text.                           </td></tr>
+<tr><td> --currency=[CURRENCY]... </td><td> Limit results to specified currencies.                </td></tr>
+</tbody></table>
+<h2 id="examples" class="section-header"><a href="#examples">EXAMPLES</a></h2>
 <p><code>openalias nabijaczleweli.xyz donate.getmonero.org</code></p>
-
 <pre><code class="language-text">Addresses of nabijaczleweli.xyz:
   btc:
     nabijaczleweli
@@ -175,9 +154,7 @@ Addresses of donate.getmonero.org:
     1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H
     Donation to Monero Core Team
 </code></pre>
-
 <p><code>openalias -rv nabijaczleweli.xyz donate@getmonero.org</code></p>
-
 <pre><code class="language-text">Looking up nabijaczleweli.xyz...
 Addresses for nabijaczleweli.xyz:
   oa1:btc recipient_address=1CgLs6CxXMAY4Pj4edQq5vyaFoP9NdqVKH; recipient_name=nabijaczleweli;
@@ -190,9 +167,7 @@ Addresses for donate@getmonero.org:
   oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; recipient_name=Monero Development;
           tx_description=Donation to Monero Core Team;
 </code></pre>
-
 <p><code>openalias -cxmr -c doge nabijaczleweli.xyz donate.getmonero.org</code></p>
-
 <pre><code class="language-text">No xmr, nor doge addresses found for nabijaczleweli.xyz.
 
 Addresses of donate.getmonero.org:
@@ -209,13 +184,15 @@ Addresses of donate.getmonero.org:
                                   title='struct openalias::CryptoAddress'>CryptoAddress</a></td>
                            <td class='docblock-short'>
                                 <p><a href="https://openalias.org">OpenAlias</a>-parsed cryptocurrency address.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
                            <td><a class="struct" href="struct.Options.html"
                                   title='struct openalias::Options'>Options</a></td>
                            <td class='docblock-short'>
-                                <p>Representation of the application&#39;s all configurable values.</p>
+                                <p>Representation of the application's all configurable values.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -223,6 +200,7 @@ Addresses of donate.getmonero.org:
                                   title='struct openalias::ParseError'>ParseError</a></td>
                            <td class='docblock-short'>
                                 <p>OpenAlias record parsing error</p>
+
                            </td>
                        </tr></table><h2 id='enums' class='section-header'><a href="#enums">Enums</a></h2>
 <table>
@@ -231,6 +209,7 @@ Addresses of donate.getmonero.org:
                                   title='enum openalias::Error'>Error</a></td>
                            <td class='docblock-short'>
                                 <p>Some error emerging from the library.</p>
+
                            </td>
                        </tr></table><h2 id='functions' class='section-header'><a href="#functions">Functions</a></h2>
 <table>
@@ -239,6 +218,7 @@ Addresses of donate.getmonero.org:
                                   title='fn openalias::address_strings'>address_strings</a></td>
                            <td class='docblock-short'>
                                 <p>Ask a DNS server for &quot;oa1:&quot;-prefixed TXT records for the specified OpenAlias.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -246,6 +226,7 @@ Addresses of donate.getmonero.org:
                                   title='fn openalias::addresses'>addresses</a></td>
                            <td class='docblock-short'>
                                 <p>Ask a DNS server for addresses for the specified OpenAlias.</p>
+
                            </td>
                        </tr>
                        <tr class=' module-item'>
@@ -253,6 +234,7 @@ Addresses of donate.getmonero.org:
                                   title='fn openalias::alias_to_fqdn'>alias_to_fqdn</a></td>
                            <td class='docblock-short'>
                                 <p>Convert an OpenAlias to an FQDN.</p>
+
                            </td>
                        </tr></table></section>
     <section id='search' class="content hidden"></section>
@@ -267,18 +249,22 @@ Addresses of donate.getmonero.org:
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 

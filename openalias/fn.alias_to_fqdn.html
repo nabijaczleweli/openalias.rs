@@ -10,8 +10,11 @@
     <title>openalias::alias_to_fqdn - Rust</title>
 
     <link rel="stylesheet" type="text/css" href="../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../rustdoc.css">
-    <link rel="stylesheet" type="text/css" href="../main.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css" id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../main.css" id="themeStyle">
+    <script src="../storage.js"></script>
     
 
     
@@ -28,10 +31,18 @@
     
 
     <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
         
         <p class='location'><a href='index.html'>openalias</a></p><script>window.sidebarCurrent = {name: 'alias_to_fqdn', ty: 'fn', relpath: ''};</script><script defer src="sidebar-items.js"></script>
     </nav>
 
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
     <nav class="sub">
         <form class="search-form js-only">
             <div class="search-container">
@@ -50,16 +61,19 @@
                    </a>
                </span><a class='srclink' href='../src/openalias/address.rs.html#24-34' title='goto source code'>[src]</a></span></h1>
 <pre class='rust fn'>pub fn alias_to_fqdn(alias: &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</pre><div class='docblock'><p>Convert an OpenAlias to an FQDN.</p>
-
 <p>Paraphrasing <a href="https://openalias.org#implement">OpenAlias</a>:</p>
-
 <ol>
-<li><p>If the alias contains an <code>@</code> character, replace it with a <code>.</code> (period) character to allow for email-style addressing.</p></li>
-<li><p>Check that the alias contains a <code>.</code> (period) character, if not then it is an address and not an FQDN.</p></li>
-<li><p>Append, if one doesn&#39;t exist, a dot to the end of the alias, to ensure it&#39;s an FQDN.</p></li>
+<li>
+<p>If the alias contains an <code>@</code> character, replace it with a <code>.</code> (period) character to allow for email-style addressing.</p>
+</li>
+<li>
+<p>Check that the alias contains a <code>.</code> (period) character, if not then it is an address and not an FQDN.</p>
+</li>
+<li>
+<p>Append, if one doesn't exist, a dot to the end of the alias, to ensure it's an FQDN.</p>
+</li>
 </ol>
-
-<h1 id='examples' class='section-header'><a href='#examples'>Examples</a></h1>
+<h1 id="examples" class="section-header"><a href="#examples">Examples</a></h1>
 <pre class="rust rust-example-rendered">
 <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">alias_to_fqdn</span>(<span class="string">&quot;donate.getmonero.org&quot;</span>),
            <span class="prelude-val">Some</span>(<span class="string">&quot;donate.getmonero.org.&quot;</span>.<span class="ident">to_string</span>()));
@@ -82,18 +96,22 @@
                 <h2>Keyboard Shortcuts</h2>
 
                 <dl>
-                    <dt>?</dt>
+                    <dt><kbd>?</kbd></dt>
                     <dd>Show this help dialog</dd>
-                    <dt>S</dt>
+                    <dt><kbd>S</kbd></dt>
                     <dd>Focus the search field</dd>
-                    <dt>&larrb;</dt>
+                    <dt><kbd>↑</kbd></dt>
                     <dd>Move up in search results</dd>
-                    <dt>&rarrb;</dt>
+                    <dt><kbd>↓</kbd></dt>
                     <dd>Move down in search results</dd>
-                    <dt>&#9166;</dt>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
                     <dd>Go to active search result</dd>
-                    <dt>+</dt>
-                    <dd>Collapse/expand all sections</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
                 </dl>
             </div>
 
