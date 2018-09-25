@@ -107,7 +107,7 @@
 //! # openalias.rs as аn executable
 //!
 //! This is just a very short synopsis of
-//! [the manpage](https://cdn.rawgit.com/nabijaczleweli/openalias.rs/man/openalias.1.html),
+//! [the manpage](https://rawcdn.githack.com/nabijaczleweli/openalias.rs/man/openalias.1.html),
 //! so consult that for more data.
 //!
 //! ## OPTIONS
