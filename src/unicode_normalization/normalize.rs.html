@@ -1,60 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-normalization-0.1.5/src/normalize.rs`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang">
-
-    <title>normalize.rs.html -- source</title>
-
-    <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle">
-    
-    <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../main.css" id="themeStyle">
-    <script src="../../storage.js"></script>
-    
-
-    <link rel="shortcut icon" href="https://unicode-rs.github.io/unicode-rs_sm.png">
-    
-</head>
-<body class="rustdoc source">
-    <!--[if lte IE 8]>
-    <div class="warning">
-        This old browser is unsupported and will most likely display funky
-        things.
-    </div>
-    <![endif]-->
-
-    
-
-    <nav class="sidebar">
-        <div class="sidebar-menu">&#9776;</div>
-        <a href='../../unicode_normalization/index.html'><img src='https://unicode-rs.github.io/unicode-rs_sm.png' alt='logo' width='100'></a>
-        
-    </nav>
-
-    <div class="theme-picker">
-        <button id="theme-picker" aria-label="Pick another theme!">
-            <img src="../../brush.svg" width="18" alt="Pick another theme!">
-        </button>
-        <div id="theme-choices"></div>
-    </div>
-    <script src="../../theme.js"></script>
-    <nav class="sub">
-        <form class="search-form js-only">
-            <div class="search-container">
-                <input class="search-input" name="search"
-                       autocomplete="off"
-                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
-                       type="search">
-            </div>
-        </form>
-    </nav>
-
-    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/unicode-normalization-0.1.7/src/normalize.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>normalize.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script><link rel="shortcut icon" href="https://unicode-rs.github.io/unicode-rs_sm.png"></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../unicode_normalization/index.html'><img src='https://unicode-rs.github.io/unicode-rs_sm.png' alt='logo' width='100'></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -206,21 +150,6 @@
 <span id="150">150</span>
 <span id="151">151</span>
 <span id="152">152</span>
-<span id="153">153</span>
-<span id="154">154</span>
-<span id="155">155</span>
-<span id="156">156</span>
-<span id="157">157</span>
-<span id="158">158</span>
-<span id="159">159</span>
-<span id="160">160</span>
-<span id="161">161</span>
-<span id="162">162</span>
-<span id="163">163</span>
-<span id="164">164</span>
-<span id="165">165</span>
-<span id="166">166</span>
-<span id="167">167</span>
 </pre><pre class="rust ">
 <span class="comment">// Copyright 2012-2015 The Rust Project Developers. See the COPYRIGHT</span>
 <span class="comment">// file at the top-level directory of this distribution and at</span>
@@ -233,102 +162,60 @@
 <span class="comment">// except according to those terms.</span>
 
 <span class="doccomment">//! Functions for computing canonical and compatible decompositions for Unicode characters.</span>
-
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">cmp</span>::<span class="ident">Ordering</span>::{<span class="ident">Equal</span>, <span class="ident">Less</span>, <span class="ident">Greater</span>};
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">char</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">ops</span>::<span class="ident">FnMut</span>;
-<span class="kw">use</span> <span class="ident">tables</span>::<span class="ident">normalization</span>::{<span class="ident">canonical_table</span>, <span class="ident">canonical_table_STRTAB</span>};
-<span class="kw">use</span> <span class="ident">tables</span>::<span class="ident">normalization</span>::{<span class="ident">compatibility_table</span>, <span class="ident">compatibility_table_STRTAB</span>};
-<span class="kw">use</span> <span class="ident">tables</span>::<span class="ident">normalization</span>::{<span class="ident">composition_table</span>, <span class="ident">composition_table_STRTAB</span>};
-<span class="kw">use</span> <span class="ident">tables</span>::<span class="ident">normalization</span>::<span class="ident">Slice</span>;
-
-<span class="kw">fn</span> <span class="ident">bsearch_table</span><span class="op">&lt;</span><span class="ident">T</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">r</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [(<span class="ident">char</span>, <span class="ident">Slice</span>)], <span class="ident">strtab</span>: <span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">T</span>]) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">T</span>]<span class="op">&gt;</span> {
-    <span class="kw">match</span> <span class="ident">r</span>.<span class="ident">binary_search_by</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">val</span>, _)<span class="op">|</span> {
-        <span class="kw">if</span> <span class="ident">c</span> <span class="op">==</span> <span class="ident">val</span> { <span class="ident">Equal</span> }
-        <span class="kw">else</span> <span class="kw">if</span> <span class="ident">val</span> <span class="op">&lt;</span> <span class="ident">c</span> { <span class="ident">Less</span> }
-        <span class="kw">else</span> { <span class="ident">Greater</span> }
-    }) {
-        <span class="prelude-val">Ok</span>(<span class="ident">idx</span>) <span class="op">=&gt;</span> {
-            <span class="kw">let</span> <span class="kw-2">ref</span> <span class="ident">slice</span> <span class="op">=</span> <span class="ident">r</span>[<span class="ident">idx</span>].<span class="number">1</span>;
-            <span class="kw">let</span> <span class="ident">offset</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">offset</span> <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="kw">let</span> <span class="ident">length</span> <span class="op">=</span> <span class="ident">slice</span>.<span class="ident">length</span> <span class="kw">as</span> <span class="ident">usize</span>;
-            <span class="prelude-val">Some</span>(<span class="kw-2">&amp;</span><span class="ident">strtab</span>[<span class="ident">offset</span>..(<span class="ident">offset</span> <span class="op">+</span> <span class="ident">length</span>)])
-        }
-        <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">None</span>
-    }
-}
+<span class="kw">use</span> <span class="ident">tables</span>;
 
 <span class="doccomment">/// Compute canonical Unicode decomposition for character.</span>
 <span class="doccomment">/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)</span>
 <span class="doccomment">/// for more information.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decompose_canonical</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">char</span>, <span class="kw-2">mut</span> <span class="ident">i</span>: <span class="ident">F</span>) <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) { <span class="ident">d</span>(<span class="ident">c</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">i</span>, <span class="bool-val">false</span>); }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decompose_canonical</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">emit_char</span>: <span class="ident">F</span>) <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) {
+    <span class="ident">decompose</span>(<span class="ident">c</span>, <span class="ident">tables</span>::<span class="ident">canonical_fully_decomposed</span>, <span class="ident">emit_char</span>)
+}
 
 <span class="doccomment">/// Compute canonical or compatible Unicode decomposition for character.</span>
 <span class="doccomment">/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)</span>
 <span class="doccomment">/// for more information.</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decompose_compatible</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">char</span>, <span class="kw-2">mut</span> <span class="ident">i</span>: <span class="ident">F</span>) <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) { <span class="ident">d</span>(<span class="ident">c</span>, <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">i</span>, <span class="bool-val">true</span>); }
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">decompose_compatible</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>)<span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">emit_char</span>: <span class="ident">F</span>) {
+    <span class="kw">let</span> <span class="ident">decompose_char</span> <span class="op">=</span> <span class="op">|</span><span class="ident">c</span><span class="op">|</span> <span class="ident">tables</span>::<span class="ident">compatibility_fully_decomposed</span>(<span class="ident">c</span>)
+        .<span class="ident">or_else</span>(<span class="op">||</span> <span class="ident">tables</span>::<span class="ident">canonical_fully_decomposed</span>(<span class="ident">c</span>));
+    <span class="ident">decompose</span>(<span class="ident">c</span>, <span class="ident">decompose_char</span>, <span class="ident">emit_char</span>)
+}
 
-<span class="comment">// FIXME(#19596) This is a workaround, we should use `F` instead of `&amp;mut F`</span>
-<span class="kw">fn</span> <span class="ident">d</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">i</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">F</span>, <span class="ident">k</span>: <span class="ident">bool</span>) <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) {
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">fn</span> <span class="ident">decompose</span><span class="op">&lt;</span><span class="ident">D</span>, <span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">c</span>: <span class="ident">char</span>, <span class="ident">decompose_char</span>: <span class="ident">D</span>, <span class="kw-2">mut</span> <span class="ident">emit_char</span>: <span class="ident">F</span>)
+    <span class="kw">where</span> <span class="ident">D</span>: <span class="ident">Fn</span>(<span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="kw-2">&amp;</span><span class="lifetime">&#39;static</span> [<span class="ident">char</span>]<span class="op">&gt;</span>, <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>)
+{
     <span class="comment">// 7-bit ASCII never decomposes</span>
-    <span class="kw">if</span> <span class="ident">c</span> <span class="op">&lt;=</span> <span class="string">&#39;\x7f&#39;</span> { (<span class="kw-2">*</span><span class="ident">i</span>)(<span class="ident">c</span>); <span class="kw">return</span>; }
-
-    <span class="comment">// Perform decomposition for Hangul</span>
-    <span class="kw">if</span> (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&gt;=</span> <span class="ident">S_BASE</span> <span class="op">&amp;&amp;</span> (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;</span> (<span class="ident">S_BASE</span> <span class="op">+</span> <span class="ident">S_COUNT</span>) {
-        <span class="ident">decompose_hangul</span>(<span class="ident">c</span>, <span class="ident">i</span>);
+    <span class="kw">if</span> <span class="ident">c</span> <span class="op">&lt;=</span> <span class="string">&#39;\x7f&#39;</span> {
+        <span class="ident">emit_char</span>(<span class="ident">c</span>);
         <span class="kw">return</span>;
     }
 
-    <span class="comment">// First check the canonical decompositions</span>
-    <span class="kw">match</span> <span class="ident">bsearch_table</span>(<span class="ident">c</span>, <span class="ident">canonical_table</span>, <span class="ident">canonical_table_STRTAB</span>) {
-        <span class="prelude-val">Some</span>(<span class="ident">canon</span>) <span class="op">=&gt;</span> {
-            <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="ident">canon</span> {
-                <span class="ident">d</span>(<span class="kw-2">*</span><span class="ident">x</span>, <span class="ident">i</span>, <span class="ident">k</span>);
-            }
-            <span class="kw">return</span>;
-        }
-        <span class="prelude-val">None</span> <span class="op">=&gt;</span> ()
+    <span class="comment">// Perform decomposition for Hangul</span>
+    <span class="kw">if</span> <span class="ident">is_hangul_syllable</span>(<span class="ident">c</span>) {
+        <span class="ident">decompose_hangul</span>(<span class="ident">c</span>, <span class="ident">emit_char</span>);
+        <span class="kw">return</span>;
     }
 
-    <span class="comment">// Bottom out if we&#39;re not doing compat.</span>
-    <span class="kw">if</span> <span class="op">!</span><span class="ident">k</span> { (<span class="kw-2">*</span><span class="ident">i</span>)(<span class="ident">c</span>); <span class="kw">return</span>; }
-
-    <span class="comment">// Then check the compatibility decompositions</span>
-    <span class="kw">match</span> <span class="ident">bsearch_table</span>(<span class="ident">c</span>, <span class="ident">compatibility_table</span>, <span class="ident">compatibility_table_STRTAB</span>) {
-        <span class="prelude-val">Some</span>(<span class="ident">compat</span>) <span class="op">=&gt;</span> {
-            <span class="kw">for</span> <span class="ident">x</span> <span class="kw">in</span> <span class="ident">compat</span> {
-                <span class="ident">d</span>(<span class="kw-2">*</span><span class="ident">x</span>, <span class="ident">i</span>, <span class="ident">k</span>);
-            }
-            <span class="kw">return</span>;
+    <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">decomposed</span>) <span class="op">=</span> <span class="ident">decompose_char</span>(<span class="ident">c</span>) {
+        <span class="kw">for</span> <span class="kw-2">&amp;</span><span class="ident">d</span> <span class="kw">in</span> <span class="ident">decomposed</span> {
+            <span class="ident">emit_char</span>(<span class="ident">d</span>);
         }
-        <span class="prelude-val">None</span> <span class="op">=&gt;</span> ()
+        <span class="kw">return</span>;
     }
 
     <span class="comment">// Finally bottom out.</span>
-    (<span class="kw-2">*</span><span class="ident">i</span>)(<span class="ident">c</span>);
+    <span class="ident">emit_char</span>(<span class="ident">c</span>);
 }
 
 <span class="doccomment">/// Compose two characters into a single character, if possible.</span>
 <span class="doccomment">/// See [Unicode Standard Annex #15](http://www.unicode.org/reports/tr15/)</span>
 <span class="doccomment">/// for more information.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">compose</span>(<span class="ident">a</span>: <span class="ident">char</span>, <span class="ident">b</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
-    <span class="ident">compose_hangul</span>(<span class="ident">a</span>, <span class="ident">b</span>).<span class="ident">or_else</span>(<span class="op">||</span> {
-        <span class="kw">match</span> <span class="ident">bsearch_table</span>(<span class="ident">a</span>, <span class="ident">composition_table</span>, <span class="ident">composition_table_STRTAB</span>) {
-            <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
-            <span class="prelude-val">Some</span>(<span class="ident">candidates</span>) <span class="op">=&gt;</span> {
-                <span class="kw">match</span> <span class="ident">candidates</span>.<span class="ident">binary_search_by</span>(<span class="op">|</span><span class="kw-2">&amp;</span>(<span class="ident">val</span>, _)<span class="op">|</span> {
-                    <span class="kw">if</span> <span class="ident">b</span> <span class="op">==</span> <span class="ident">val</span> { <span class="ident">Equal</span> }
-                    <span class="kw">else</span> <span class="kw">if</span> <span class="ident">val</span> <span class="op">&lt;</span> <span class="ident">b</span> { <span class="ident">Less</span> }
-                    <span class="kw">else</span> { <span class="ident">Greater</span> }
-                }) {
-                    <span class="prelude-val">Ok</span>(<span class="ident">idx</span>) <span class="op">=&gt;</span> {
-                        <span class="kw">let</span> (_, <span class="ident">result</span>) <span class="op">=</span> <span class="ident">candidates</span>[<span class="ident">idx</span>];
-                        <span class="prelude-val">Some</span>(<span class="ident">result</span>)
-                    }
-                    <span class="prelude-val">Err</span>(_) <span class="op">=&gt;</span> <span class="prelude-val">None</span>
-                }
-            }
-        }
-    })
+    <span class="ident">compose_hangul</span>(<span class="ident">a</span>, <span class="ident">b</span>).<span class="ident">or_else</span>(<span class="op">||</span> <span class="ident">tables</span>::<span class="ident">composition_table</span>(<span class="ident">a</span>, <span class="ident">b</span>))
 }
 
 <span class="comment">// Constants from Unicode 9.0.0 Section 3.12 Conjoining Jamo Behavior</span>
@@ -343,115 +230,78 @@
 <span class="kw">const</span> <span class="ident">N_COUNT</span>: <span class="ident">u32</span> <span class="op">=</span> (<span class="ident">V_COUNT</span> <span class="op">*</span> <span class="ident">T_COUNT</span>);
 <span class="kw">const</span> <span class="ident">S_COUNT</span>: <span class="ident">u32</span> <span class="op">=</span> (<span class="ident">L_COUNT</span> <span class="op">*</span> <span class="ident">N_COUNT</span>);
 
-<span class="comment">// FIXME(#19596) This is a workaround, we should use `F` instead of `&amp;mut F`</span>
+<span class="kw">const</span> <span class="ident">S_LAST</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">S_BASE</span> <span class="op">+</span> <span class="ident">S_COUNT</span> <span class="op">-</span> <span class="number">1</span>;
+<span class="kw">const</span> <span class="ident">L_LAST</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">L_BASE</span> <span class="op">+</span> <span class="ident">L_COUNT</span> <span class="op">-</span> <span class="number">1</span>;
+<span class="kw">const</span> <span class="ident">V_LAST</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">V_BASE</span> <span class="op">+</span> <span class="ident">V_COUNT</span> <span class="op">-</span> <span class="number">1</span>;
+<span class="kw">const</span> <span class="ident">T_LAST</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">T_BASE</span> <span class="op">+</span> <span class="ident">T_COUNT</span> <span class="op">-</span> <span class="number">1</span>;
+
+<span class="comment">// Composition only occurs for `TPart`s in `U+11A8 ... U+11C2`,</span>
+<span class="comment">// i.e. `T_BASE + 1 ... T_LAST`.</span>
+<span class="kw">const</span> <span class="ident">T_FIRST</span>: <span class="ident">u32</span> <span class="op">=</span> <span class="ident">T_BASE</span> <span class="op">+</span> <span class="number">1</span>;
+
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">is_hangul_syllable</span>(<span class="ident">c</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&gt;=</span> <span class="ident">S_BASE</span> <span class="op">&amp;&amp;</span> (<span class="ident">c</span> <span class="kw">as</span> <span class="ident">u32</span>) <span class="op">&lt;</span> (<span class="ident">S_BASE</span> <span class="op">+</span> <span class="ident">S_COUNT</span>)
+}
+
 <span class="comment">// Decompose a precomposed Hangul syllable</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unsafe_code</span>)]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
-<span class="kw">fn</span> <span class="ident">decompose_hangul</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">s</span>: <span class="ident">char</span>, <span class="ident">f</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">F</span>) <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>;
-
-    <span class="kw">let</span> <span class="ident">si</span> <span class="op">=</span> <span class="ident">s</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">-</span> <span class="ident">S_BASE</span>;
-
-    <span class="kw">let</span> <span class="ident">li</span> <span class="op">=</span> <span class="ident">si</span> <span class="op">/</span> <span class="ident">N_COUNT</span>;
+<span class="kw">fn</span> <span class="ident">decompose_hangul</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">s</span>: <span class="ident">char</span>, <span class="kw-2">mut</span> <span class="ident">emit_char</span>: <span class="ident">F</span>) <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">FnMut</span>(<span class="ident">char</span>) {
+    <span class="kw">let</span> <span class="ident">s_index</span> <span class="op">=</span> <span class="ident">s</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">-</span> <span class="ident">S_BASE</span>;
+    <span class="kw">let</span> <span class="ident">l_index</span> <span class="op">=</span> <span class="ident">s_index</span> <span class="op">/</span> <span class="ident">N_COUNT</span>;
     <span class="kw">unsafe</span> {
-        (<span class="kw-2">*</span><span class="ident">f</span>)(<span class="ident">transmute</span>(<span class="ident">L_BASE</span> <span class="op">+</span> <span class="ident">li</span>));
+        <span class="ident">emit_char</span>(<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">L_BASE</span> <span class="op">+</span> <span class="ident">l_index</span>));
 
-        <span class="kw">let</span> <span class="ident">vi</span> <span class="op">=</span> (<span class="ident">si</span> <span class="op">%</span> <span class="ident">N_COUNT</span>) <span class="op">/</span> <span class="ident">T_COUNT</span>;
-        (<span class="kw-2">*</span><span class="ident">f</span>)(<span class="ident">transmute</span>(<span class="ident">V_BASE</span> <span class="op">+</span> <span class="ident">vi</span>));
+        <span class="kw">let</span> <span class="ident">v_index</span> <span class="op">=</span> (<span class="ident">s_index</span> <span class="op">%</span> <span class="ident">N_COUNT</span>) <span class="op">/</span> <span class="ident">T_COUNT</span>;
+        <span class="ident">emit_char</span>(<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">V_BASE</span> <span class="op">+</span> <span class="ident">v_index</span>));
 
-        <span class="kw">let</span> <span class="ident">ti</span> <span class="op">=</span> <span class="ident">si</span> <span class="op">%</span> <span class="ident">T_COUNT</span>;
-        <span class="kw">if</span> <span class="ident">ti</span> <span class="op">&gt;</span> <span class="number">0</span> {
-            (<span class="kw-2">*</span><span class="ident">f</span>)(<span class="ident">transmute</span>(<span class="ident">T_BASE</span> <span class="op">+</span> <span class="ident">ti</span>));
+        <span class="kw">let</span> <span class="ident">t_index</span> <span class="op">=</span> <span class="ident">s_index</span> <span class="op">%</span> <span class="ident">T_COUNT</span>;
+        <span class="kw">if</span> <span class="ident">t_index</span> <span class="op">&gt;</span> <span class="number">0</span> {
+            <span class="ident">emit_char</span>(<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">T_BASE</span> <span class="op">+</span> <span class="ident">t_index</span>));
         }
     }
+}
+
+<span class="attribute">#[<span class="ident">inline</span>]</span>
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">fn</span> <span class="ident">hangul_decomposition_length</span>(<span class="ident">s</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="ident">usize</span> {
+    <span class="kw">let</span> <span class="ident">si</span> <span class="op">=</span> <span class="ident">s</span> <span class="kw">as</span> <span class="ident">u32</span> <span class="op">-</span> <span class="ident">S_BASE</span>;
+    <span class="kw">let</span> <span class="ident">ti</span> <span class="op">=</span> <span class="ident">si</span> <span class="op">%</span> <span class="ident">T_COUNT</span>;
+    <span class="kw">if</span> <span class="ident">ti</span> <span class="op">&gt;</span> <span class="number">0</span> { <span class="number">3</span> } <span class="kw">else</span> { <span class="number">2</span> }
 }
 
 <span class="comment">// Compose a pair of Hangul Jamo</span>
 <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">unsafe_code</span>)]</span>
 <span class="attribute">#[<span class="ident">inline</span>(<span class="ident">always</span>)]</span>
 <span class="kw">fn</span> <span class="ident">compose_hangul</span>(<span class="ident">a</span>: <span class="ident">char</span>, <span class="ident">b</span>: <span class="ident">char</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">char</span><span class="op">&gt;</span> {
-    <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">mem</span>::<span class="ident">transmute</span>;
+    <span class="kw">let</span> (<span class="ident">a</span>, <span class="ident">b</span>) <span class="op">=</span> (<span class="ident">a</span> <span class="kw">as</span> <span class="ident">u32</span>, <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>);
+    <span class="kw">match</span> (<span class="ident">a</span>, <span class="ident">b</span>) {
+        <span class="comment">// Compose a leading consonant and a vowel together into an LV_Syllable</span>
+        (<span class="ident">L_BASE</span> ... <span class="ident">L_LAST</span>, <span class="ident">V_BASE</span> ... <span class="ident">V_LAST</span>) <span class="op">=&gt;</span> {
+            <span class="kw">let</span> <span class="ident">l_index</span> <span class="op">=</span> <span class="ident">a</span> <span class="op">-</span> <span class="ident">L_BASE</span>;
+            <span class="kw">let</span> <span class="ident">v_index</span> <span class="op">=</span> <span class="ident">b</span> <span class="op">-</span> <span class="ident">V_BASE</span>;
+            <span class="kw">let</span> <span class="ident">lv_index</span> <span class="op">=</span> <span class="ident">l_index</span> <span class="op">*</span> <span class="ident">N_COUNT</span> <span class="op">+</span> <span class="ident">v_index</span> <span class="op">*</span> <span class="ident">T_COUNT</span>;
+            <span class="kw">let</span> <span class="ident">s</span> <span class="op">=</span> <span class="ident">S_BASE</span> <span class="op">+</span> <span class="ident">lv_index</span>;
+            <span class="prelude-val">Some</span>(<span class="kw">unsafe</span> {<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">s</span>)})
+        },
+        <span class="comment">// Compose an LV_Syllable and a trailing consonant into an LVT_Syllable</span>
+        (<span class="ident">S_BASE</span> ... <span class="ident">S_LAST</span>, <span class="ident">T_FIRST</span> ... <span class="ident">T_LAST</span>) <span class="kw">if</span> (<span class="ident">a</span> <span class="op">-</span> <span class="ident">S_BASE</span>) <span class="op">%</span> <span class="ident">T_COUNT</span> <span class="op">==</span> <span class="number">0</span> <span class="op">=&gt;</span> {
+            <span class="prelude-val">Some</span>(<span class="kw">unsafe</span> {<span class="ident">char</span>::<span class="ident">from_u32_unchecked</span>(<span class="ident">a</span> <span class="op">+</span> (<span class="ident">b</span> <span class="op">-</span> <span class="ident">T_BASE</span>))})
+        },
+        <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">None</span>,
+    }
+}
 
-    <span class="kw">let</span> <span class="ident">l</span> <span class="op">=</span> <span class="ident">a</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="kw">let</span> <span class="ident">v</span> <span class="op">=</span> <span class="ident">b</span> <span class="kw">as</span> <span class="ident">u32</span>;
-    <span class="comment">// Compose an LPart and a VPart</span>
-    <span class="kw">if</span> <span class="ident">L_BASE</span> <span class="op">&lt;=</span> <span class="ident">l</span> <span class="op">&amp;&amp;</span> <span class="ident">l</span> <span class="op">&lt;</span> (<span class="ident">L_BASE</span> <span class="op">+</span> <span class="ident">L_COUNT</span>) <span class="comment">// l should be an L choseong jamo</span>
-        <span class="op">&amp;&amp;</span> <span class="ident">V_BASE</span> <span class="op">&lt;=</span> <span class="ident">v</span> <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="op">&lt;</span> (<span class="ident">V_BASE</span> <span class="op">+</span> <span class="ident">V_COUNT</span>) { <span class="comment">// v should be a V jungseong jamo</span>
-        <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">S_BASE</span> <span class="op">+</span> (<span class="ident">l</span> <span class="op">-</span> <span class="ident">L_BASE</span>) <span class="op">*</span> <span class="ident">N_COUNT</span> <span class="op">+</span> (<span class="ident">v</span> <span class="op">-</span> <span class="ident">V_BASE</span>) <span class="op">*</span> <span class="ident">T_COUNT</span>;
-        <span class="kw">return</span> <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">transmute</span>(<span class="ident">r</span>)) };
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="kw">mod</span> <span class="ident">tests</span> {
+    <span class="kw">use</span> <span class="kw">super</span>::<span class="ident">compose_hangul</span>;
+
+    <span class="comment">// Regression test from a bugfix where we were composing an LV_Syllable with</span>
+    <span class="comment">// T_BASE directly. (We should only compose an LV_Syllable with a character</span>
+    <span class="comment">// in the range `T_BASE + 1 ... T_LAST`.)</span>
+    <span class="attribute">#[<span class="ident">test</span>]</span>
+    <span class="kw">fn</span> <span class="ident">test_hangul_composition</span>() {
+        <span class="macro">assert_eq</span><span class="macro">!</span>(<span class="ident">compose_hangul</span>(<span class="string">&#39;\u{c8e0}&#39;</span>, <span class="string">&#39;\u{11a7}&#39;</span>), <span class="prelude-val">None</span>);
     }
-    <span class="comment">// Compose an LVPart and a TPart</span>
-    <span class="kw">if</span> <span class="ident">S_BASE</span> <span class="op">&lt;=</span> <span class="ident">l</span> <span class="op">&amp;&amp;</span> <span class="ident">l</span> <span class="op">&lt;=</span> (<span class="ident">S_BASE</span><span class="op">+</span><span class="ident">S_COUNT</span><span class="op">-</span><span class="ident">T_COUNT</span>) <span class="comment">// l should be a syllable block</span>
-        <span class="op">&amp;&amp;</span> <span class="ident">T_BASE</span> <span class="op">&lt;=</span> <span class="ident">v</span> <span class="op">&amp;&amp;</span> <span class="ident">v</span> <span class="op">&lt;</span> (<span class="ident">T_BASE</span><span class="op">+</span><span class="ident">T_COUNT</span>) <span class="comment">// v should be a T jongseong jamo</span>
-        <span class="op">&amp;&amp;</span> (<span class="ident">l</span> <span class="op">-</span> <span class="ident">S_BASE</span>) <span class="op">%</span> <span class="ident">T_COUNT</span> <span class="op">==</span> <span class="number">0</span> { <span class="comment">// l should be an LV syllable block (not LVT)</span>
-        <span class="kw">let</span> <span class="ident">r</span> <span class="op">=</span> <span class="ident">l</span> <span class="op">+</span> (<span class="ident">v</span> <span class="op">-</span> <span class="ident">T_BASE</span>);
-        <span class="kw">return</span> <span class="kw">unsafe</span> { <span class="prelude-val">Some</span>(<span class="ident">transmute</span>(<span class="ident">r</span>)) };
-    }
-    <span class="prelude-val">None</span>
 }
 </pre>
-</section>
-    <section id='search' class="content hidden"></section>
-
-    <section class="footer"></section>
-
-    <aside id="help" class="hidden">
-        <div>
-            <h1 class="hidden">Help</h1>
-
-            <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
-
-                <dl>
-                    <dt><kbd>?</kbd></dt>
-                    <dd>Show this help dialog</dd>
-                    <dt><kbd>S</kbd></dt>
-                    <dd>Focus the search field</dd>
-                    <dt><kbd>↑</kbd></dt>
-                    <dd>Move up in search results</dd>
-                    <dt><kbd>↓</kbd></dt>
-                    <dd>Move down in search results</dd>
-                    <dt><kbd>↹</kbd></dt>
-                    <dd>Switch tab</dd>
-                    <dt><kbd>&#9166;</kbd></dt>
-                    <dd>Go to active search result</dd>
-                    <dt><kbd>+</kbd></dt>
-                    <dd>Expand all sections</dd>
-                    <dt><kbd>-</kbd></dt>
-                    <dd>Collapse all sections</dd>
-                </dl>
-            </div>
-
-            <div class="infos">
-                <h2>Search Tricks</h2>
-
-                <p>
-                    Prefix searches with a type followed by a colon (e.g.
-                    <code>fn:</code>) to restrict the search to a given type.
-                </p>
-
-                <p>
-                    Accepted types are: <code>fn</code>, <code>mod</code>,
-                    <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
-                </p>
-
-                <p>
-                    Search functions by type signature (e.g.
-                    <code>vec -> usize</code> or <code>* -> vec</code>)
-                </p>
-            </div>
-        </div>
-    </aside>
-
-    
-
-    <script>
-        window.rootPath = "../../";
-        window.currentCrate = "unicode_normalization";
-    </script>
-    <script src="../../main.js"></script>
-    <script defer src="../../search-index.js"></script>
-</body>
-</html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../";window.currentCrate = "unicode_normalization";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>
