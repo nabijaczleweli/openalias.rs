@@ -171,7 +171,7 @@
 //! ```
 
 
-extern crate resolve;
+extern crate hickory_resolver;
 #[macro_use]
 extern crate clap;
 extern crate crc;

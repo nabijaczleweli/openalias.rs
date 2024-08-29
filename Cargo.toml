@@ -16,7 +16,7 @@ exclude = ["*.enc"]
 
 
 [dependencies]
-resolve = "0.1"
+hickory-resolver = "0.24"
 clap = "2.26"
 crc = "1.5"
 

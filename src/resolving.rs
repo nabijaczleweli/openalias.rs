@@ -1,8 +1,8 @@
 use self::super::{CryptoAddress, Error, alias_to_fqdn};
-use resolve::{DnsResolver, DnsConfig, default_config};
+use hickory_resolver::Resolver as DnsResolver;
 use std::iter::FromIterator;
 use std::time::Duration;
-use resolve::record;
+use std::str;
 
 
 /// Ask a DNS server for addresses for the specified OpenAlias.
@@ -65,21 +65,11 @@ pub fn addresses(address: &str) -> Result<Vec<CryptoAddress>, Error> {
 ///                  tx_description=Donation to Monero Core Team;".to_string()]);
 /// ```
 pub fn address_strings(address: &str) -> Result<Vec<String>, Error> {
-    Ok(Result::from_iter(DnsResolver::new(default_config().unwrap_or_else(|_| {
-            DnsConfig {
-                name_servers: vec!["8.8.8.8:53".parse().unwrap(), "8.8.4.4:53".parse().unwrap()],
-                search: vec![],
-                n_dots: 0,
-                timeout: Duration::from_secs(5),
-                attempts: 5,
-                rotate: true,
-                use_inet6: false,
-            }
-        }))
+    Result::from_iter(DnsResolver::from_system_conf()
         ?
-        .resolve_record::<record::Txt>(&alias_to_fqdn(address).ok_or(Error::AddressParse)?)?
-        .into_iter()
-        .map(|r| r.data)
+        .txt_lookup(alias_to_fqdn(address).ok_or(Error::AddressParse)?)?
+        .iter()
+        .flat_map(|t| t.iter())
         .filter(|s| s.starts_with(b"oa1:"))
-        .map(String::from_utf8))?)
+        .map(|s| str::from_utf8(s).map(str::to_string).map_err(Error::Utf8Parse)))
 }
