@@ -1,7 +1,7 @@
 image:
   - Visual Studio 2022
 
-version: 0.2.0-{build}
+version: 1.0.0-{build}
 
 skip_tags: false
 
@@ -24,19 +24,19 @@ build_script:
   - git submodule update --init --recursive
   - cargo build --verbose --release
   -
-  - cp target\release\openalias.exe openalias-v0.2.0.exe
-  - strip --strip-all --remove-section=.comment --remove-section=.note openalias-v0.2.0.exe
+  - cp target\release\openalias.exe openalias-v1.0.0.exe
+  - strip --strip-all --remove-section=.comment --remove-section=.note openalias-v1.0.0.exe
 
 test: off
 test_script:
   - cargo test --verbose --release
 
 artifacts:
-  - path: openalias-v0.2.0.exe
+  - path: openalias-v1.0.0.exe
 
 deploy:
   provider: GitHub
-  artifact: openalias-v0.2.0.exe
+  artifact: openalias-v1.0.0.exe
   auth_token:
     secure: 3Q/17mSjjqWglHuSEzAOFsZA5bNU5t/18/+msPL6PwmI9WZwS7FsVu0yxjgwFM/X
   on:

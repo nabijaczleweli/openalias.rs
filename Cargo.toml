@@ -9,7 +9,7 @@ categories = ["command-line-utilities", "parser-implementations", "authenticatio
 license = "MIT"
 build = "build.rs"
 # Remember to also update in appveyor.yml
-version = "0.2.0"
+version = "1.0.0"
 # Remember to also update in openalias.rs.md
 authors = ["nabijaczleweli <nabijaczleweli@gmail.com>"]
 exclude = ["*.enc"]
