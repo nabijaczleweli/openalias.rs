@@ -64,11 +64,13 @@ pub fn addresses(address: &str) -> Result<Vec<CryptoAddress>, Error> {
 ///                  tx_description=Donation to Monero Core Team;".to_string()]);
 /// ```
 pub fn address_strings(address: &str) -> Result<Vec<String>, Error> {
-    Result::from_iter(DnsResolver::from_system_conf()
+    let mut res: Vec<_> = Result::from_iter(DnsResolver::from_system_conf()
         ?
         .txt_lookup(alias_to_fqdn(address).ok_or(Error::AddressParse)?)?
         .iter()
         .flat_map(|t| t.iter())
         .filter(|s| s.starts_with(b"oa1:"))
-        .map(|s| str::from_utf8(s).map(str::to_string).map_err(Error::Utf8Parse)))
+        .map(|s| str::from_utf8(s).map(str::to_string).map_err(Error::Utf8Parse)))?;
+    res.sort();
+    Ok(res)
 }
