@@ -1,3 +1,6 @@
+image:
+  - Visual Studio 2022
+
 version: 0.2.0-{build}
 
 skip_tags: false
@@ -9,9 +12,9 @@ clone_folder: C:\openalias.rs
 
 install:
   - set PATH=C:\msys64\mingw64\bin;C:\msys64\usr\bin;%PATH%;C:\Users\appveyor\.cargo\bin
-  - bash -lc "pacman --needed --noconfirm -Sy pacman-mirrors"
-  - bash -lc "pacman --noconfirm -Sy"
-  - bash -lc "pacman --noconfirm -S mingw-w64-x86_64-toolchain"
+  - bash -lc "pacman --noconfirm -Syyu"
+  - bash -lc "pacman --noconfirm -Syyu"
+  - bash -lc "pacman --noconfirm -S mingw-w64-x86_64-toolchain zip"
   -
   - curl -SL https://win.rustup.rs/ -oC:\rustup-init.exe
   - C:\rustup-init.exe -y --default-host="x86_64-pc-windows-gnu"
@@ -19,11 +22,14 @@ install:
 build: off
 build_script:
   - git submodule update --init --recursive
-  - cargo build --release
+  - cargo build --verbose --release
+  -
   - cp target\release\openalias.exe openalias-v0.2.0.exe
   - strip --strip-all --remove-section=.comment --remove-section=.note openalias-v0.2.0.exe
 
 test: off
+test_script:
+  - cargo test --verbose --release
 
 artifacts:
   - path: openalias-v0.2.0.exe
