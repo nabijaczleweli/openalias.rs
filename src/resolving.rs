@@ -30,8 +30,8 @@ use resolve::record;
 ///                 },
 ///                 CryptoAddress {
 ///                     cryptocurrency: "xmr".to_string(),
-///                     address: "44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft\
-///                               3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A".to_string(),
+///                     address: "888tNkZrPN6JsEgekjMnABU4TBzc2Dt29EPAvkRxbANsAnj\
+///                               yPbb3iQ1YBRk1UXcdRsiKc9dhwMVgN5S9cQUiyoogDavup3H".to_string(),
 ///
 ///                     recipient_name: Some("Monero Development".to_string()),
 ///                     tx_description: Some("Donation to Monero Core Team".to_string()),
@@ -59,8 +59,8 @@ pub fn addresses(address: &str) -> Result<Vec<CryptoAddress>, Error> {
 ///            vec!["oa1:btc recipient_address=1KTexdemPdxSBcG55heUuTjDRYqbC5ZL8H; \
 ///                  recipient_name=Monero Development; \
 ///                  tx_description=Donation to Monero Core Team;".to_string(),
-///                 "oa1:xmr recipient_address=44AFFq5kSiGBoZ4NMDwYtN18obc8AemS33DBLWs3H7otXft\
-///                  3XjrpDtQGv7SqSsaBYBb98uNbr2VBBEt7f2wfn3RVGQBEP3A; \
+///                 "oa1:xmr recipient_address=888tNkZrPN6JsEgekjMnABU4TBzc2Dt29EPAvkRxbANsAnj\
+///                  yPbb3iQ1YBRk1UXcdRsiKc9dhwMVgN5S9cQUiyoogDavup3H; \
 ///                  recipient_name=Monero Development; \
 ///                  tx_description=Donation to Monero Core Team;".to_string()]);
 /// ```
