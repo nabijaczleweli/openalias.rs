@@ -16,7 +16,7 @@ pub enum Error {
     Io(IoError),
     /// TXT record not UTF8 (ASCII).
     Utf8Parse(Utf8Error),
-    /// TXT record not UTF8 (ASCII).
+    /// Error with conversing with DNS server.
     Resolve(ResolveError),
     /// Non-FQDN address passed to `address*()`.
     AddressParse,
