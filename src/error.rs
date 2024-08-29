@@ -47,17 +47,7 @@ impl From<ResolveError> for Error {
 }
 
 impl StdError for Error {
-    fn description(&self) -> &str {
-        match *self {
-            Error::Oa1Parse(ref pe) => pe.description(),
-            Error::Io(ref ioe) => ioe.description(),
-            Error::Utf8Parse(ref u8e) => u8e.description(),
-            Error::Resolve(ref re) => re.description(),
-            Error::AddressParse => "Specified address not valid OpenAlias",
-        }
-    }
-
-    fn cause(&self) -> Option<&StdError> {
+    fn source(&self) -> Option<&(dyn StdError + 'static)> {
         match *self {
             Error::Oa1Parse(ref pe) => Some(pe),
             Error::Io(ref ioe) => Some(ioe),
@@ -75,7 +65,7 @@ impl fmt::Display for Error {
             Error::Io(ref ioe) => write!(f, "{}", ioe),
             Error::Utf8Parse(ref u8e) => write!(f, "{}", u8e),
             Error::Resolve(ref re) => write!(f, "{}", re),
-            Error::AddressParse => write!(f, "{}", self.description()),
+            Error::AddressParse => f.write_str("Specified address not valid OpenAlias"),
         }
     }
 }

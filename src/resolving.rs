@@ -1,7 +1,6 @@
 use self::super::{CryptoAddress, Error, alias_to_fqdn};
 use hickory_resolver::Resolver as DnsResolver;
 use std::iter::FromIterator;
-use std::time::Duration;
 use std::str;
 
 
